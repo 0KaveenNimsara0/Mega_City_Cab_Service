@@ -34,7 +34,7 @@
 
     <div class="mt-5">
         <a href="admin_login.jsp" class="btn btn-custom btn-register">Admin Login</a>
-        <a href="register.jsp" class="btn btn-custom btn-register">Register</a>
+        <a href="Register.jsp" class="btn btn-custom btn-register">Register</a>
         <a href="Login.jsp" class="btn btn-custom btn-login">Login</a>
     </div>
 </div>
