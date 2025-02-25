@@ -32,33 +32,27 @@
 </head>
 <body>
 <div class="register-container">
-    <h2 class="text-center">Welcome Back</h2>
-    <form action="Register" method="post">
+    <h2 class="text-center">Welcome Back </h2>
+    <form action="register" method="post" id="registerForm">
         <div class="mb-3">
-            <input type="text" id="name" name="name" class="form-control" placeholder="Enter your Name" required>
-        </div>
-        <div class="mb-3">
-            <input type="text" id="address" name="address" class="form-control" placeholder="Enter your Address" required>
-        </div>
-        <div class="mb-3">
-            <input type="text" id="NIC" name="NIC" class="form-control" placeholder="Enter your NIC" required>
+            <input type="text" id="Name" name="Name" class="form-control" placeholder="Enter your Name" required>
         </div>
         <div class="mb-3">
             <input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter your Phone Number" required>
         </div>
         <div class="mb-3">
-            <input type="email" id="email" name="email:" class="form-control" placeholder="Enter your Email:" required>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Enter your Email" required>
         </div>
         <div class="mb-3">
-            <input type="text" id="username" name="username:" class="form-control" placeholder="Enter your Username:" required>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Enter your Username" required>
         </div>
         <div class="mb-3">
-            <input type="password" id="password" name="password:" class="form-control" placeholder="Enter your Password:" required>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Enter your Password" required>
         </div>
         <div class="mb-3">
-            <input type="password" id="confirmPassword" name="confirmPassword:" class="form-control" placeholder="Enter your Confirm Password:" required>
+            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirm your Password" required>
         </div>
-
+        <div id="passwordError" class="text-danger mb-3"></div>
         <button type="submit" class="btn btn-login">Register</button>
     </form>
 </div>
