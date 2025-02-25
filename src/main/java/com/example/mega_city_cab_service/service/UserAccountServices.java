@@ -4,7 +4,7 @@ import com.example.mega_city_cab_service.Util.passwordhash;
 import com.example.mega_city_cab_service.dao.userDAO;
 import com.example.mega_city_cab_service.model.User;
 
-public class UserRegisterService {
+public class UserAccountServices {
     private userDAO userDao = new userDAO();
     private passwordhash passwordHasher = new passwordhash();
 

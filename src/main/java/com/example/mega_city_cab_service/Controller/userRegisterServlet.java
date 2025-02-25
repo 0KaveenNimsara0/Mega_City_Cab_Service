@@ -1,7 +1,7 @@
 package com.example.mega_city_cab_service.Controller;
 
 import com.example.mega_city_cab_service.model.User;
-import com.example.mega_city_cab_service.service.UserRegisterService;
+import com.example.mega_city_cab_service.service.UserAccountServices;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,7 +14,7 @@ import java.io.IOException;
 
 
 public class userRegisterServlet extends HttpServlet {
-    private UserRegisterService userRegisterService = new UserRegisterService();
+    private UserAccountServices userAccountServices = new UserAccountServices();
 
 @Override
    protected void doPost (HttpServletRequest request, HttpServletResponse response)
@@ -33,7 +33,7 @@ public class userRegisterServlet extends HttpServlet {
            user.setPhone(phone);
            user.setName(Name);
 // Attempt to register the user
-       boolean isRegistered = userRegisterService.registerUser(user);
+       boolean isRegistered = userAccountServices.registerUser(user);
 
        // Redirect based on registration result
        if (isRegistered) {
