@@ -23,43 +23,35 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .login-container h2 {
-            margin-bottom: 20px;
-            color: #333;
-        }
-        .form-control {
-            margin-bottom: 15px;
-        }
-        .btn-login {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        .btn-login:hover {
-            background-color: #0056b3;
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
 <div class="login-container">
     <h2 class="text-center">Welcome Back</h2>
+    <%-- Display error message if present --%>
+    <%
+        String error = request.getParameter("error");
+        if ("true".equals(error)) {
+    %>
+    <div class="error-message">Invalid username/email or password. Please try again.</div>
+    <%
+        }
+    %>
     <form action="login" method="post">
         <div class="mb-3">
-            <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required>
+            <input type="text" id="usernameOrEmail" name="usernameOrEmail" class="form-control"
+                   placeholder="Enter your username or Email" required>
         </div>
         <div class="mb-3">
             <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
         </div>
-        <button type="submit" class="btn btn-login">Login</button>
+        <button type="submit" class="btn btn-primary w-100">Login</button>
     </form>
 </div>
-
-<!-- Bootstrap JS and dependencies -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -34,4 +34,26 @@ public class UserAccountServices {
         // Delegate the registration process to the DAO
         return userDao.registerUser(user);
     }
+
+    public User authenticateUser(String usernameOrEmail, String password) {
+        // Retrieve the user from the database by username or email
+        User user = userDao.getUserByUsernameOrEmail(usernameOrEmail);
+        if (user == null) {
+            System.out.println("User not found.");
+            return null;
+        }
+
+        // Hash the entered password and compare it with the stored hash
+        String hashedPassword = passwordHasher.hashPassword(password);
+        if (hashedPassword.equals(user.getPassword())) {
+            System.out.println("Authentication successful.");
+            System.out.println("Username: " + user.getUsername());
+            System.out.println("userID: " + user.getCustomerId());
+
+            return user;
+        } else {
+            System.out.println("Authentication failed.");
+            return null;
+        }
+    }
 }

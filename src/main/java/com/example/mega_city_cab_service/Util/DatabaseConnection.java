@@ -10,9 +10,10 @@ public class DatabaseConnection {
     private DatabaseConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/mega_city", "root", "");
+//             connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/mega_city", "root", "");
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException("Error connecting to the database", e);
         }
     }
 
@@ -23,7 +24,20 @@ public class DatabaseConnection {
         return instance;
     }
 
+    /**
+     * Retrieves a fresh database connection.
+     *
+     * @return A new database connection.
+     */
     public Connection getConnection() {
-        return connection;
+        try {
+            // Create and return a new connection for each request
+            return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/mega_city", "root", "");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error connecting to the database", e);
+        }
     }
+
+
 }

@@ -6,6 +6,7 @@ import com.example.mega_city_cab_service.model.User;
 import java.sql.Connection;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class userDAO {
@@ -41,7 +42,32 @@ public class userDAO {
         }
         return false;
     }
+    public User getUserByUsernameOrEmail(String usernameOrEmail) {
+        String GET_USER_SQL = "SELECT * FROM customers WHERE username  = ?  OR email = ?";
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_SQL)) {
 
+            preparedStatement.setString(1, usernameOrEmail);
+            preparedStatement.setString(2, usernameOrEmail);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int customerId = resultSet.getInt("id");
+                String username = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                String email = resultSet.getString("email");
+                String phone = resultSet.getString("phone");
+                String name = resultSet.getString("name");
+
+                return new User(customerId, username, password, name, email, phone);
+            }
+        } catch (Exception e) {
+            System.err.println("Error retrieving user: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }
 
