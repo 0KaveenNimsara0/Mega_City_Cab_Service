@@ -2,6 +2,7 @@ package com.example.mega_city_cab_service.Util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class DatabaseConnection {
     private static DatabaseConnection instance;
@@ -10,34 +11,59 @@ public class DatabaseConnection {
     private DatabaseConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-//             connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/mega_city", "root", "");
+            String url = "jdbc:mysql://127.0.0.1:3306/mega_city";
+            String user = "root";
+            String password = "";
+            connection = DriverManager.getConnection(url, user, password);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Error connecting to the database", e);
         }
     }
 
-    public static DatabaseConnection getInstance() {
+    public static synchronized DatabaseConnection getInstance() {
         if (instance == null) {
             instance = new DatabaseConnection();
         }
         return instance;
     }
 
-    /**
-     * Retrieves a fresh database connection.
-     *
-     * @return A new database connection.
-     */
     public Connection getConnection() {
-        try {
-            // Create and return a new connection for each request
-            return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/mega_city", "root", "");
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error connecting to the database", e);
-        }
+        return connection;
     }
 
-
+    public void closeConnection() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
+
+//public class DatabaseConnection {
+//
+//    // Static method to create and return a new connection
+//    public static Connection getConnection() {
+//        try {
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//            return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/mega_city", "root", "");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw new RuntimeException("Error connecting to the database", e);
+//        }
+//    }
+//
+//    // Utility method to close a connection
+//    public static void closeConnection(Connection connection) {
+//        if (connection != null) {
+//            try {
+//                connection.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+//}
