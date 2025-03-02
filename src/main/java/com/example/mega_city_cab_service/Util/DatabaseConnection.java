@@ -32,15 +32,7 @@ public class DatabaseConnection {
         return connection;
     }
 
-    public void closeConnection() {
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
+
 }
 
 //public class DatabaseConnection {
