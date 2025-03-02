@@ -3,13 +3,30 @@ package com.example.mega_city_cab_service.service;
 import com.example.mega_city_cab_service.Util.passwordhash;
 import com.example.mega_city_cab_service.dao.userDAO;
 import com.example.mega_city_cab_service.model.User;
+import com.example.mega_city_cab_service.factory.UserFactory;
+import java.sql.SQLException;
 
 public class UserAccountServices {
-    private userDAO userDao = new userDAO();
-    private passwordhash passwordHasher = new passwordhash();
+    private userDAO userDao;
+    private passwordhash passwordHasher;
+
+    // Constructor to initialize dependencies
+    public UserAccountServices() {
+        try {
+            this.userDao = new userDAO(); // Initialize userDAO with persistent connection
+        } catch (SQLException e) {
+            System.err.println("Failed to initialize userDAO: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Database connection failed", e); // Wrap as runtime exception
+        }
+        this.passwordHasher = new passwordhash();
+    }
 
     // Method to validate and register the user
-    public boolean registerUser(User user) {
+    public boolean registerUser(String username, String password, String name, String email, String phone) {
+
+        User user = UserFactory.createUser(username, password, name, email, phone);
+
         System.out.println("Validating user: " + user);
         // Perform basic validation (you can add more complex validation if needed)
         if (user.getUsername() == null || user.getUsername().isEmpty() ||
