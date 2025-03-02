@@ -19,7 +19,7 @@ public class userRegisterServlet extends HttpServlet {
 @Override
    protected void doPost (HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
-            User user = new User();
+
            // Retrieve form data
             String username = request.getParameter("username");
             String password = request.getParameter("password");
@@ -27,13 +27,9 @@ public class userRegisterServlet extends HttpServlet {
             String phone = request.getParameter("phone");
             String Name = request.getParameter("Name");
 
-           user.setUsername(username);
-           user.setPassword(password);
-           user.setEmail(email);
-           user.setPhone(phone);
-           user.setName(Name);
+
 // Attempt to register the user
-       boolean isRegistered = userAccountServices.registerUser(user);
+       boolean isRegistered = userAccountServices.registerUser(username,password,email,phone,Name);
 
        // Redirect based on registration result
        if (isRegistered) {
