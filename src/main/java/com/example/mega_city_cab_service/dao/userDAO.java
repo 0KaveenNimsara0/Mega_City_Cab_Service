@@ -14,7 +14,7 @@ public class userDAO {
     private Connection connection;
 
     // Constructor to initialize the connection
-    public userDAO() throws SQLException {
+    public userDAO() {
         this.connection = DatabaseConnection.getInstance().getConnection();
     }
 

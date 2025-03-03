@@ -2,8 +2,9 @@ package com.example.mega_city_cab_service.Util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
+
+// use singleton design pattern to create database
 public class DatabaseConnection {
     private static DatabaseConnection instance;
     private Connection connection;
@@ -20,7 +21,7 @@ public class DatabaseConnection {
             throw new RuntimeException("Error connecting to the database", e);
         }
     }
-
+//lazy initialization/double-checked locking
     public static synchronized DatabaseConnection getInstance() {
         if (instance == null) {
             instance = new DatabaseConnection();
