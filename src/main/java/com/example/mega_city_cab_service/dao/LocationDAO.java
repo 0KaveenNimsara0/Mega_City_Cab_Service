@@ -42,6 +42,7 @@ public class LocationDAO {
         return locations;
     }
 
+    // Method to fetch the distance between two locations
     public double getDistance(int fromLocationId, int toLocationId) throws SQLException {
         String GET_DISTANCE_SQL = "SELECT distance_km FROM distances WHERE from_location_id = ? AND to_location_id = ?";
         double distance = -1; // Default value if no distance is found
@@ -66,5 +67,36 @@ public class LocationDAO {
 
         return distance;
     }
+    public int getLocationByName(String locationName) throws SQLException {
+        String query = "SELECT location_id FROM locations WHERE location_name = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, locationName);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("location_id");
+                }
+            }
+        }
+        return -1; // Return -1 if no matching location is found
+    }
+    public Location getLocationById(int locationId) throws SQLException {
+        String query = "SELECT * FROM locations WHERE location_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, locationId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return new Location(
+                            resultSet.getInt("location_id"),
+                            resultSet.getString("location_name")
+                    );
+                }
+            }
+        }
+        return null; // Return null if no location is found
+    }
+
+
 
 }

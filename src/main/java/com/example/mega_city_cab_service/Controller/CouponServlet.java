@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 
 public class CouponServlet extends HttpServlet {
@@ -23,26 +24,28 @@ public class CouponServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
 
-        try {
-            if ("validate".equals(action)) {
-                String couponCode = request.getParameter("couponCode");
+        if ("validate".equals(action)) {
+            String couponCode = request.getParameter("couponCode");
 
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+
+            try {
                 if (couponCode == null || couponCode.trim().isEmpty()) {
-                    response.getWriter().write("{\"valid\": false, \"message\": \"Coupon code is required.\"}");
+                    out.print("{\"valid\": false, \"message\": \"Coupon code is required.\"}");
                     return;
                 }
 
                 double discount = couponService.validateCoupon(couponCode);
 
                 if (discount > 0) {
-                    response.getWriter().write("{\"valid\": true, \"discount\": " + discount + "}");
+                    out.print("{\"valid\": true, \"discount\": " + discount + "}");
                 } else {
-                    response.getWriter().write("{\"valid\": false, \"message\": \"Invalid or expired coupon.\"}");
+                    out.print("{\"valid\": false, \"message\": \"Invalid or expired coupon.\"}");
                 }
+            } catch (Exception e) {
+                out.print("{\"valid\": false, \"message\": \"Error validating coupon: " + e.getMessage() + "\"}");
             }
-        } catch (Exception e) {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.getWriter().write("{\"error\": \"Error validating coupon: " + e.getMessage() + "\"}");
         }
     }
 }

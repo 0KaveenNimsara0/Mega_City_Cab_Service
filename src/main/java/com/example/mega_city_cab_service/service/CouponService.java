@@ -22,7 +22,9 @@ public class CouponService {
         }
         return 0; // Return 0 if the coupon is invalid or expired
     }
-
+    public Coupon getCouponByCode(String couponCode) throws SQLException {
+        return couponDAO.getCouponByCode(couponCode);
+    }
     // Retrieve all active coupons
     public List<Coupon> getAllActiveCoupons() throws SQLException {
         return couponDAO.getAllActiveCoupons();
