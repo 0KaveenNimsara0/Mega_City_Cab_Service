@@ -74,33 +74,35 @@ public class BookingDAO {
 //    }
 //
 //    // Method to retrieve a booking by its ID
-//    public Booking getBookingById(String bookingID) throws SQLException {
-//        String query = "SELECT * FROM booking WHERE bookingID = ?";
-//        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-//            preparedStatement.setString(1, bookingID);
-//
-//            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-//                if (resultSet.next()) {
-//                    return new Booking(
-//                            resultSet.getString("bookingID"),
-//                            resultSet.getInt("customerID"), // Changed to int as customerID is likely an integer
-//                            resultSet.getInt("pickupPoint"), // Changed to int as pickupPoint is likely an integer
-//                            resultSet.getInt("destination"), // Changed to int as destination is likely an integer
-//                            resultSet.getTimestamp("pickupDate"),
-//                            resultSet.getString("carType"),
-//                            resultSet.getDouble("amount"),
-//                            resultSet.getString("status"),
-//                            resultSet.getString("couponCode"),
-//                            resultSet.getTimestamp("bookedDate")
-//                    );
-//                }
-//            }
-//        } catch (SQLException e) {
-//            System.err.println("Error retrieving booking by ID: " + e.getMessage());
-//            throw e; // Re-throw the exception for proper handling in the calling layer
-//        }
-//        return null; // Return null if no booking is found
-//    }
+public Booking getBookingById(int bookingID) throws SQLException {
+    String query = "SELECT * FROM booking WHERE bookingID = ?";
+    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        preparedStatement.setInt(1, bookingID);
+
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                // Map the result set to a Booking object
+                Booking booking = new Booking();
+                booking.setBookingID(resultSet.getInt("bookingID"));
+                booking.setCustomerID(resultSet.getInt("customerID"));
+                booking.setPickupPoint(resultSet.getInt("pickupPoint"));
+                booking.setDestination(resultSet.getInt("destination"));
+                booking.setPickupDate(resultSet.getTimestamp("pickupDate"));
+                booking.setCarType(resultSet.getString("carType"));
+                booking.setAmount(resultSet.getDouble("amount"));
+                booking.setStatus(resultSet.getString("status"));
+                booking.setCouponCode(resultSet.getString("couponCode"));
+
+                return booking;
+            }
+        }
+    } catch (SQLException e) {
+        System.err.println("Error retrieving booking by ID: " + e.getMessage());
+        throw e; // Re-throw the exception for proper handling in the calling layer
+    }
+    return null; // Return null if no booking is found
+}
+
 
     // Method to update a booking's status
     public boolean updateBookingStatus(String bookingID, String status) throws SQLException {
@@ -127,5 +129,17 @@ public class BookingDAO {
             System.err.println("Error deleting booking: " + e.getMessage());
             throw e; // Re-throw the exception for proper handling in the calling layer
         }
+    }
+    // Method to get the latest booking ID
+    public String getLatestBookingId() throws SQLException {
+        String query = "SELECT MAX(bookingID) AS latestBookingId FROM booking";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            if (resultSet.next()) {
+                return resultSet.getString("latestBookingId");
+            }
+        }
+        return null;
     }
 }

@@ -39,7 +39,7 @@ public class BookingServlet extends HttpServlet {
             // Validate user session
             HttpSession session = request.getSession(false);
             if (session == null || session.getAttribute("userId") == null) {
-                response.sendRedirect("login.jsp");
+                response.sendRedirect("Login.jsp");
                 return;
             }
 
@@ -62,6 +62,16 @@ public class BookingServlet extends HttpServlet {
 
             if (isBooked) {
                 // Forward to payment page with total amount
+                request.setAttribute("bookingId", booking.getBookingID());
+                request.setAttribute("pickupPoint", String.valueOf(pickupPoint)); // Convert to String
+                request.setAttribute("destination", String.valueOf(destination)); // Convert to String
+                request.setAttribute("carType", carType);
+                request.setAttribute("pickupDate", pickupDate);
+                request.setAttribute("couponCode", couponCode);
+                request.setAttribute("distance", distance);
+                request.setAttribute("tax", tax);
+                request.setAttribute("perKmRate", perKmRate);
+                request.setAttribute("discount", discount);
                 request.setAttribute("totalAmount", totalAmount);
                 request.getRequestDispatcher("payment.jsp").forward(request, response);
             } else {

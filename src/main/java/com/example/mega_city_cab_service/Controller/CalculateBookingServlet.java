@@ -5,7 +5,7 @@ import com.example.mega_city_cab_service.service.VehicleTypeService;
 import com.example.mega_city_cab_service.service.CouponService;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
+
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
-@WebServlet("/CalculateBookingServlet")
+
 public class CalculateBookingServlet extends HttpServlet {
     private final LocationService locationService;
     private final VehicleTypeService vehicleTypeService;

@@ -60,4 +60,113 @@
         <servlet-name>AdminLogoutServlet</servlet-name>
         <url-pattern>/AdminLogoutServlet</url-pattern>
     </servlet-mapping>
+
+<!--    <servlet>-->
+<!--        <servlet-name>LocationServlet</servlet-name>-->
+<!--        <servlet-class>com.example.mega_city_cab_service.Controller.LocationServlet</servlet-class>-->
+<!--    </servlet>-->
+
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>LocationServlet</servlet-name>-->
+<!--        <url-pattern>/locations</url-pattern>-->
+<!--    </servlet-mapping>-->
+
+<!--    &lt;!&ndash; Servlet Declaration &ndash;&gt;-->
+<!--    <servlet>-->
+<!--        <servlet-name>CalculateDistanceServlet</servlet-name>-->
+<!--        <servlet-class>com.example.mega_city_cab_service.Controller.CalculateDistanceServlet</servlet-class>-->
+<!--    </servlet>-->
+
+<!--    &lt;!&ndash; Servlet Mapping &ndash;&gt;-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>CalculateDistanceServlet</servlet-name>-->
+<!--        <url-pattern>/calculateDistance</url-pattern>-->
+<!--    </servlet-mapping>-->
+
+    <!-- Servlet Configuration -->
+    <servlet>
+        <servlet-name>CouponServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.CouponServlet</servlet-class>
+    </servlet>
+
+    <!-- Servlet Mapping -->
+    <servlet-mapping>
+        <servlet-name>CouponServlet</servlet-name>
+        <url-pattern>/validateCoupon</url-pattern>
+    </servlet-mapping>
+
+    <!-- Servlet Configuration -->
+    <servlet>
+        <servlet-name>CarServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.CarServlet</servlet-class>
+    </servlet>
+
+    <!-- Servlet Mapping -->
+    <servlet-mapping>
+        <servlet-name>CarServlet</servlet-name>
+        <url-pattern>/car</url-pattern>
+    </servlet-mapping>
+
+    <!-- Servlet Configuration -->
+    <servlet>
+        <servlet-name>BookingServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.BookingServlet</servlet-class>
+    </servlet>
+
+    <!-- Servlet Mapping -->
+    <servlet-mapping>
+        <servlet-name>BookingServlet</servlet-name>
+        <url-pattern>/BookingServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>VehicleTypeServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.VehicleTypeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VehicleTypeServlet</servlet-name>
+        <url-pattern>/VehicleTypeServlet</url-pattern>
+    </servlet-mapping>
+
+    <!-- Servlet Configuration for ConfirmBookingServlet -->
+    <servlet>
+        <servlet-name>ConfirmBookingServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.ConfirmBookingServlet</servlet-class>
+    </servlet>
+
+    <!-- Servlet Mapping for ConfirmBookingServlet -->
+    <servlet-mapping>
+        <servlet-name>ConfirmBookingServlet</servlet-name>
+        <url-pattern>/ConfirmBookingServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CancelBooking</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.CancelBooking</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CancelBooking</servlet-name>
+        <url-pattern>/cancelBooking</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>CalculateBooking</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.CalculateBookingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CalculateBooking</servlet-name>
+        <url-pattern>/calculateBooking</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>ProcessPayment</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.PaymentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProcessPayment</servlet-name>
+        <url-pattern>/processPayment</url-pattern>
+    </servlet-mapping>
+
 </web-app>

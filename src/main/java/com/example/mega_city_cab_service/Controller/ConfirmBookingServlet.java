@@ -77,6 +77,10 @@ public class ConfirmBookingServlet extends HttpServlet {
             request.setAttribute("discount", discount);
             request.setAttribute("totalAmount", totalAmount);
 
+            request.setAttribute("pickupPointId", pickupLocation.getLocationId());
+            request.setAttribute("destinationId", destinationLocation.getLocationId());
+            request.setAttribute("carTypeId", vehicleType.getTypeId());
+
             // Forward to the confirmation page
             request.getRequestDispatcher("booking_confirmation.jsp").forward(request, response);
         } catch (NumberFormatException e) {
