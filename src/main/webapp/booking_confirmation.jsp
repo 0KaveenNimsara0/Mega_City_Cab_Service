@@ -1,4 +1,18 @@
+<%@ page import="com.example.mega_city_cab_service.model.Booking" %>
+<%@ page import="com.example.mega_city_cab_service.model.Location" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%
+    Booking booking = (Booking) request.getAttribute("booking");
+    if (booking == null) {
+        booking = new Booking(); // Prevent null pointer exceptions
+    }
+
+    Location location = (Location) request.getAttribute("location");
+    if (location == null) {
+        location = new Location(); // Prevent null pointer exceptions
+    }
+%>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -258,19 +272,19 @@
                             <div class="detail-label">
                                 <i class="fas fa-map-marker-alt me-2 text-primary"></i>Pickup Point:
                             </div>
-                            <div class="detail-value">${pickupPoint}</div>
+                            <div class="detail-value"><%= request.getAttribute("pickupPoint") %></div>
                         </div>
                         <div class="detail-row">
                             <div class="detail-label">
                                 <i class="fas fa-location-arrow me-2 text-success"></i>Destination:
                             </div>
-                            <div class="detail-value">${destination}</div>
+                            <div class="detail-value"><%= request.getAttribute("destination") %></div>
                         </div>
                         <div class="detail-row">
                             <div class="detail-label">
                                 <i class="fas fa-road me-2 text-secondary"></i>Distance:
                             </div>
-                            <div class="detail-value">${distance} km</div>
+                            <div class="detail-value"><%= request.getAttribute("distance") %> km</div>
                         </div>
                     </div>
 
@@ -281,13 +295,13 @@
                             <div class="detail-label">
                                 <i class="fas fa-taxi me-2 text-warning"></i>Vehicle Type:
                             </div>
-                            <div class="detail-value">${carType}</div>
+                            <div class="detail-value"><%= request.getAttribute("carType") %></div>
                         </div>
                         <div class="detail-row">
                             <div class="detail-label">
                                 <i class="fas fa-calendar-alt me-2 text-info"></i>Pickup Date:
                             </div>
-                            <div class="detail-value">${pickupDate}</div>
+                            <div class="detail-value"><%= request.getAttribute("pickupDate") %></div>
                         </div>
                     </div>
 
@@ -298,39 +312,43 @@
                             <div class="detail-label">
                                 <i class="fas fa-dollar-sign me-2 text-secondary"></i>Per-KM Rate:
                             </div>
-                            <div class="detail-value">LKR ${perKmRate}</div>
+                            <div class="detail-value">LKR <%= request.getAttribute("perKmRate") %></div>
                         </div>
                         <div class="detail-row">
                             <div class="detail-label">
                                 <i class="fas fa-percentage me-2 text-info"></i>Tax:
                             </div>
-                            <div class="detail-value">LKR ${tax}</div>
+                            <div class="detail-value">LKR <%= request.getAttribute("tax") %></div>
                         </div>
+
+                        <%
+                            String couponCode = (String)request.getAttribute("couponCode");
+                            boolean hasCoupon = couponCode != null && !couponCode.isEmpty();
+                        %>
                         <div class="detail-row">
                             <div class="detail-label">
                                 <i class="fas fa-tag me-2 text-success"></i>Coupon Code:
                             </div>
-                            <div class="detail-value">${couponCode != null && !couponCode.isEmpty() ? couponCode : 'Not Applied'}</div>
+                            <div class="detail-value"><%= hasCoupon ? couponCode : "Not Applied" %></div>
                         </div>
                         <div class="detail-row">
                             <div class="detail-label">
                                 <i class="fas fa-piggy-bank me-2 text-success"></i>Discount:
                             </div>
-                            <div class="detail-value discount-value">${discount}%</div>
-
+                            <div class="detail-value discount-value"><%= request.getAttribute("discount") %>%</div>
                         </div>
                         <div class="detail-row price-row">
                             <div class="detail-label">
                                 <i class="fas fa-money-bill-wave me-2"></i>Total Amount:
                             </div>
-                            <div class="detail-value">LKR ${totalAmount}</div>
+                            <div class="detail-value">LKR <%= request.getAttribute("totalAmount") %></div>
                         </div>
                     </div>
 
                     <div class="summary-box">
                         <h5 class="text-center mb-3">Booking Summary</h5>
                         <p class="text-center mb-2">Your estimated fare:</p>
-                        <div class="total-amount">LKR ${totalAmount}</div>
+                        <div class="total-amount">LKR <%= request.getAttribute("totalAmount") %></div>
                         <p class="text-center text-muted small">Including all taxes and discounts</p>
                     </div>
 
@@ -340,25 +358,25 @@
                     </div>
 
                     <!-- Hidden Fields -->
-                    <input type="hidden" name="pickupPoint" value="${pickupPointId}">
-                    <input type="hidden" name="destination" value="${destinationId}">
-                    <input type="hidden" name="carType" value="${carTypeId}">
-                    <input type="hidden" name="pickupDate" value="${pickupDate}">
-                    <input type="hidden" name="couponCode" value="${couponCode}">
-                    <input type="hidden" name="distance" value="${distance}">
-                    <input type="hidden" name="tax" value="${tax}">
-                    <input type="hidden" name="perKmRate" value="${perKmRate}">
-                    <input type="hidden" name="discount" value="${discount}">
-                    <input type="hidden" name="totalAmount" value="${totalAmount}">
+                    <input type="hidden" name="pickupPoint" value="<%= request.getAttribute("pickupPointId") %>">
+                    <input type="hidden" name="destination" value="<%= request.getAttribute("destinationId") %>">
+                    <input type="hidden" name="carType" value="<%= request.getAttribute("carTypeId") %>">
+                    <input type="hidden" name="pickupDate" value="<%= request.getAttribute("pickupDate") %>">
+                    <input type="hidden" name="couponCode" value="<%= couponCode %>">
+                    <input type="hidden" name="distance" value="<%= request.getAttribute("distance") %>">
+                    <input type="hidden" name="tax" value="<%= request.getAttribute("tax") %>">
+                    <input type="hidden" name="perKmRate" value="<%= request.getAttribute("perKmRate") %>">
+                    <input type="hidden" name="discount" value="<%= request.getAttribute("discount") %>">
+                    <input type="hidden" name="totalAmount" value="<%= request.getAttribute("totalAmount") %>">
 
                     <!-- Action Buttons -->
                     <div class="action-buttons">
                         <button type="submit" class="btn btn-confirm">
                             <i class="fas fa-check-circle me-2"></i>Confirm Booking
                         </button>
-                        <button type="button" class="btn btn-cancel" onclick="cancelBooking()">
+                        <a href="Customer_Dashboard.jsp" class="btn btn-cancel">
                             <i class="fas fa-times-circle me-2"></i>Cancel
-                        </button>
+                        </a>
                     </div>
                 </form>
             </div>
@@ -368,12 +386,5 @@
 
 <!-- Bootstrap JS and Popper.js -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    function cancelBooking() {
-        if (confirm("Are you sure you want to cancel this booking? All your information will be lost.")) {
-            window.location.href = "Customer_Dashboard.jsp"; // Redirect to the customer dashboard
-        }
-    }
-</script>
 </body>
 </html>
