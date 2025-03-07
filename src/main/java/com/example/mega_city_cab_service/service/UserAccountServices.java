@@ -55,4 +55,26 @@ public class UserAccountServices {
             return null;
         }
     }
+
+    //get user details use customerId
+    public User getUserById(int customerId) {
+        try {
+            return userDao.getUserById(customerId);
+        } catch (Exception e) {
+            System.err.println("Error retrieving user by ID: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //update customer Details
+    public boolean updateUserProfile(User user) {
+        try {
+            return userDao.updateUserProfile(user);
+        } catch (Exception e) {
+            System.err.println("Error updating user profile: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

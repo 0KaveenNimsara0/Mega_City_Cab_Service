@@ -81,4 +81,55 @@ public class userDAO {
             e.printStackTrace();
         }
     }
+
+    public User getUserById(int customerId) {
+        String GET_USER_BY_ID_SQL = "SELECT * FROM customers WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_ID_SQL)) {
+            preparedStatement.setInt(1, customerId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return new User(
+                            resultSet.getInt("id"),
+                            resultSet.getString("username"),
+                            resultSet.getString("password"),
+                            resultSet.getString("name"),
+                            resultSet.getString("email"),
+                            resultSet.getString("phone"),
+                            resultSet.getString("address"),
+                            resultSet.getString("nic")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving user by ID: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null; // Return null if no user is found
+    }
+
+    /**
+     * Updates a user's profile in the database.
+     *
+     * @param user The updated User object.
+     * @return True if the update was successful, false otherwise.
+     */
+    public boolean updateUserProfile(User user) {
+        String UPDATE_USER_SQL = "UPDATE customers SET name = ?, email = ?, phone = ?, address = ?, nic = ? WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_SQL)) {
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getEmail());
+            preparedStatement.setString(3, user.getPhone());
+            preparedStatement.setString(4, user.getAddress());
+            preparedStatement.setString(5, user.getNic());
+            preparedStatement.setInt(6, user.getCustomerId());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0; // Return true if at least one row was updated
+        } catch (SQLException e) {
+            System.err.println("Error updating user profile: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false; // Return false if the update fails
+    }
 }

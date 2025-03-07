@@ -7,6 +7,8 @@ public class User {
     private String Name;
     private String email;
     private String phone;
+    private String address; // New field for address
+    private String nic;
 
     public User(String username, String password, String name, String email, String phone) {
         this.username = username;
@@ -14,6 +16,7 @@ public class User {
         this.Name = name;
         this.email = email;
         this.phone = phone;
+//use for user factory but now removed
     }
 
     public User(int customerId, String username, String password, String Name, String email, String phone) {
@@ -23,12 +26,18 @@ public class User {
         this.Name = Name;
         this.email = email;
         this.phone = phone;
+        //use for login user
     }
 
-    public User(int customerId, String username, String password) {
+    public User(int customerId, String username, String password, String name, String email, String phone, String address, String nic) {
         this.customerId = customerId;
         this.username = username;
         this.password = password;
+        this.Name = name;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.nic = nic;
     }
 
     // Default constructor
@@ -84,4 +93,19 @@ public class User {
         this.customerId = customerId;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getNic() {
+        return nic;
+    }
+
+    public void setNic(String nic) {
+        this.nic = nic;
+    }
 }
