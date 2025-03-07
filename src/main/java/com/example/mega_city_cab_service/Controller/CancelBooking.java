@@ -1,3 +1,5 @@
+//this method use customer add booking part
+
 package com.example.mega_city_cab_service.Controller;
 
 import com.example.mega_city_cab_service.dao.BookingDAO;

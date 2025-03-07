@@ -2,6 +2,7 @@ package com.example.mega_city_cab_service.dao;
 
 import com.example.mega_city_cab_service.Util.DatabaseConnection;
 import com.example.mega_city_cab_service.model.Booking;
+import com.example.mega_city_cab_service.model.BookingDetails;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -44,36 +45,7 @@ public class BookingDAO {
         }
     }
 
-//    // Method to retrieve all bookings
-//    public List<Booking> getAllBookings() throws SQLException {
-//        List<Booking> bookings = new ArrayList<>();
-//        String query = "SELECT * FROM booking";
-//
-//        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
-//             ResultSet resultSet = preparedStatement.executeQuery()) {
-//
-//            while (resultSet.next()) {
-//                bookings.add(new Booking(
-//                        resultSet.getString("bookingID"),
-//                        resultSet.getInt("customerID"), // Changed to int as customerID is likely an integer
-//                        resultSet.getInt("pickupPoint"), // Changed to int as pickupPoint is likely an integer
-//                        resultSet.getInt("destination"), // Changed to int as destination is likely an integer
-//                        resultSet.getTimestamp("pickupDate"),
-//                        resultSet.getString("carType"),
-//                        resultSet.getDouble("amount"),
-//                        resultSet.getString("status"),
-//                        resultSet.getString("couponCode"),
-//                        resultSet.getTimestamp("bookedDate")
-//                ));
-//            }
-//        } catch (SQLException e) {
-//            System.err.println("Error retrieving bookings: " + e.getMessage());
-//            throw e; // Re-throw the exception for proper handling in the calling layer
-//        }
-//        return bookings;
-//    }
-//
-//    // Method to retrieve a booking by its ID
+   // Method to retrieve a booking by its ID
 public Booking getBookingById(int bookingID) throws SQLException {
     String query = "SELECT * FROM booking WHERE bookingID = ?";
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -141,5 +113,75 @@ public Booking getBookingById(int bookingID) throws SQLException {
             }
         }
         return null;
+    }
+
+    //Method to get booking detail
+    public List<BookingDetails> getBookingsByCustomerID(String customerID) throws SQLException {
+        List<BookingDetails> bookings = new ArrayList<>();
+        String query = "SELECT b.bookingID, l1.location_name AS pickupPointName, l2.location_name AS destinationName, " +
+                "vt.typeName AS carTypeName, b.pickupDate, b.amount, b.status, b.couponCode, b.carId " +
+                "FROM booking b " +
+                "JOIN locations l1 ON b.pickupPoint = l1.location_id " +
+                "JOIN locations l2 ON b.destination = l2.location_id " +
+                "JOIN vehicle_type vt ON b.carType = vt.typeId " +
+                "WHERE b.customerID = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, customerID);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    BookingDetails booking = new BookingDetails();
+                    booking.setBookingID(resultSet.getInt("bookingID"));
+                    booking.setPickupPointName(resultSet.getString("pickupPointName"));
+                    booking.setDestinationName(resultSet.getString("destinationName"));
+                    booking.setCarTypeName(resultSet.getString("carTypeName"));
+                    booking.setPickupDate(resultSet.getDate("pickupDate"));
+                    booking.setAmount(resultSet.getDouble("amount"));
+                    booking.setStatus(resultSet.getString("status"));
+                    booking.setCouponCode(resultSet.getString("couponCode"));
+                    booking.setCarId(resultSet.getString("carId"));
+
+                    // Fetch vehicle and driver details using carId
+                    String carId = resultSet.getString("carId");
+                    if (carId != null) {
+                        fetchVehicleAndDriverDetails(booking, carId);
+                    }
+
+                    bookings.add(booking);
+                }
+            }
+        }
+
+        return bookings;
+    }
+
+    private void fetchVehicleAndDriverDetails(BookingDetails booking, String carId) throws SQLException {
+        String vehicleQuery = "SELECT v.model, v.registrationNumber, d.name AS driverName, d.phone AS driverPhone " +
+                "FROM vehicle v " +
+                "JOIN driver d ON v.driverId = d.driverId " +
+                "WHERE v.carId = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(vehicleQuery)) {
+            preparedStatement.setString(1, carId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    booking.setVehicleModel(resultSet.getString("model"));
+                    booking.setVehicleRegistration(resultSet.getString("registrationNumber"));
+                    booking.setDriverName(resultSet.getString("driverName"));
+                    booking.setDriverPhone(resultSet.getString("driverPhone"));
+                }
+            }
+        }
+    }
+
+    public boolean cancelBooking(String bookingId) throws SQLException {
+        String query = "UPDATE booking SET status = 'Cancelled' WHERE bookingID = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, bookingId);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0; // Return true if at least one row was updated
+        }
     }
 }
