@@ -4,7 +4,6 @@ import com.example.mega_city_cab_service.model.BookingDetails;
 import com.example.mega_city_cab_service.service.UserPaymentService;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,7 +13,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/viewPayments")
 public class ViewPaymentsServlet extends HttpServlet {
 
     private final UserPaymentService userService;

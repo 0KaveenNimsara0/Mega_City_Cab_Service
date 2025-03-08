@@ -7,35 +7,112 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class CarService {
-    private CarDAO carDAO;
+    private final CarDAO carDAO;
 
-    // Constructor: Initialize CarDAO
+    // Constructor: Initialize the CarDAO
     public CarService() {
         this.carDAO = new CarDAO();
     }
 
-    // Add a new vehicle
-    public boolean addCar(Car car) throws SQLException {
-        return carDAO.addCar(car);
+
+    public boolean addCar(Car car) {
+        try {
+            return carDAO.addCar(car);
+        } catch (SQLException e) {
+            System.err.println("Error adding car: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false; // Return false if the operation fails
     }
 
-    // Retrieve all vehicles
-    public List<Car> getAllCars() throws SQLException {
-        return carDAO.getAllCars();
+
+    public List<Car> getAllCars() {
+        try {
+            return carDAO.getAllCars();
+        } catch (SQLException e) {
+            System.err.println("Error retrieving all cars: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null; // Return null if an error occurs
     }
 
-    // Retrieve a vehicle by its ID
-    public Car getCarById(String carId) throws SQLException {
-        return carDAO.getCarById(carId);
+
+    public boolean updateCar(Car car) {
+        try {
+            return carDAO.updateCar(car);
+        } catch (SQLException e) {
+            System.err.println("Error updating car: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false; // Return false if the operation fails
     }
 
-    // Update a vehicle's availability
-    public boolean updateCarAvailability(String carId, boolean isAvailable) throws SQLException {
-        return carDAO.updateCarAvailability(carId, isAvailable);
+
+    public boolean changeAvailability(String carId, boolean isAvailable) {
+        try {
+            return carDAO.changeAvailability(carId, isAvailable);
+        } catch (SQLException e) {
+            System.err.println("Error changing car availability: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false; // Return false if the operation fails
     }
 
-    // Delete a vehicle
-    public boolean deleteCar(String carId) throws SQLException {
-        return carDAO.deleteCar(carId);
+
+    public boolean deleteCar(String carId) {
+        try {
+            return carDAO.deleteCar(carId);
+        } catch (SQLException e) {
+            System.err.println("Error deleting car: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false; // Return false if the operation fails
+    }
+
+
+    public Car getCarById(String carId) throws SQLException
+    {
+        try {
+            return carDAO.getCarById(carId);
+        } catch (SQLException e) {
+            System.err.println("Error retrieving car by ID: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null; // Return null if no car is found
+    }
+
+
+    public boolean assignDriverToCar(String carId, int driverId) {
+        try {
+            return carDAO.assignDriverToCar(carId, driverId);
+        } catch (SQLException e) {
+            System.err.println("Error assigning driver to car: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false; // Return false if the operation fails
+    }
+
+
+    public int addCarAndGetId(Car car) {
+        try {
+            System.out.println("Attempting to add car: " + car);
+            int generatedId = carDAO.addCarAndGetId(car);
+            System.out.println("Car added successfully. Generated ID: " + generatedId);
+            return generatedId;
+        } catch (Exception e) {
+            System.err.println("Error adding car and getting ID: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return -1; // Return -1 if the operation fails
+    }
+
+    public boolean updateCarDriver(Car car) {
+        try {
+            return carDAO.updateCarDriver(car);
+        } catch (Exception e) {
+            System.err.println("Error updating car driver in service: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false; // Return false if the operation fails
     }
 }
