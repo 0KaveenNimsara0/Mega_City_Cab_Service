@@ -1,6 +1,7 @@
 package com.example.mega_city_cab_service.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class BookingDetails {
     private int bookingID;
@@ -17,6 +18,14 @@ public class BookingDetails {
     private String driverName;
     private String driverPhone;
 
+
+
+    // Payment-related fields
+    private String paymentId;
+    private String paymentMethod;
+    private Timestamp paymentDate;
+    private String paymentStatus;
+    private  double PaymentAmount;
     // Getters and Setters
     public int getBookingID() { return bookingID; }
     public void setBookingID(int bookingID) { this.bookingID = bookingID; }
@@ -56,4 +65,26 @@ public class BookingDetails {
 
     public String getDriverPhone() { return driverPhone; }
     public void setDriverPhone(String driverPhone) { this.driverPhone = driverPhone; }
+
+    public String getPaymentId() { return paymentId; }
+    public void setPaymentId(String paymentId) { this.paymentId = paymentId; }
+
+    public String getPaymentMethod() { return paymentMethod; }
+    public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
+
+    public Timestamp getPaymentDate() { return paymentDate; }
+    public void setPaymentDate(Timestamp paymentDate) { this.paymentDate = paymentDate; }
+
+    public String getPaymentStatus() { return paymentStatus; }
+    public void setPaymentStatus(String paymentStatus) { this.paymentStatus = paymentStatus; }
+
+    public double getPaymentAmount() {
+        return PaymentAmount;
+    }
+
+    public void setPaymentAmount(double setPaymentAmount) {
+        this.PaymentAmount = setPaymentAmount;
+    }
+
+
 }
