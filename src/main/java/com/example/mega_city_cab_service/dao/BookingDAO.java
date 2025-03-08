@@ -142,6 +142,7 @@ public Booking getBookingById(int bookingID) throws SQLException {
                     booking.setCouponCode(resultSet.getString("couponCode"));
                     booking.setCarId(resultSet.getString("carId"));
 
+
                     // Fetch vehicle and driver details using carId
                     String carId = resultSet.getString("carId");
                     if (carId != null) {
@@ -183,5 +184,49 @@ public Booking getBookingById(int bookingID) throws SQLException {
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0; // Return true if at least one row was updated
         }
+    }
+
+    public List<BookingDetails> getBookingsWithPaymentsByCustomerId(int customerId) throws SQLException {
+        String query = "SELECT b.bookingID, l1.location_name AS pickupPointName, l2.location_name AS destinationName, " +
+                "vt.typeName AS carTypeName, b.pickupDate, b.amount AS bookingAmount, b.status AS bookingStatus, " +
+                "b.couponCode, b.carId, p.paymentId, p.paymentMethod, p.amount AS paymentAmount, " +
+                "p.paymentDate, p.status AS paymentStatus " +
+                "FROM booking b " +
+                "JOIN locations l1 ON b.pickupPoint = l1.location_id " +
+                "JOIN locations l2 ON b.destination = l2.location_id " +
+                "JOIN vehicle_type vt ON b.carType = vt.typeId " +
+                "LEFT JOIN payment p ON b.bookingID = p.bookingId " +
+                "WHERE b.customerID = ?";
+
+        List<BookingDetails> bookings = new ArrayList<>();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, customerId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    BookingDetails booking = new BookingDetails();
+                    booking.setBookingID(resultSet.getInt("bookingID"));
+                    booking.setPickupPointName(resultSet.getString("pickupPointName"));
+                    booking.setDestinationName(resultSet.getString("destinationName"));
+                    booking.setCarTypeName(resultSet.getString("carTypeName"));
+                    booking.setPickupDate(resultSet.getDate("pickupDate"));
+                    booking.setAmount(resultSet.getDouble("bookingAmount"));
+                    booking.setStatus(resultSet.getString("bookingStatus"));
+                    booking.setCouponCode(resultSet.getString("couponCode"));
+                    booking.setCarId(resultSet.getString("carId"));
+
+                    // Payment details
+                    booking.setPaymentId(resultSet.getString("paymentId"));
+                    booking.setPaymentMethod(resultSet.getString("paymentMethod")!= null ? resultSet.getString("paymentMethod") : "N/A");
+                    booking.setPaymentAmount(resultSet.getDouble("paymentAmount")); // Add this field to BookingDetails
+                    booking.setPaymentDate(resultSet.getTimestamp("paymentDate"));
+                    booking.setPaymentStatus(resultSet.getString("paymentStatus")!= null ? resultSet.getString("paymentMethod") : "N/A");
+
+                    bookings.add(booking);
+                }
+            }
+        }
+        return bookings;
     }
 }
