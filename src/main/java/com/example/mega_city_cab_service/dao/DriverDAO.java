@@ -122,6 +122,7 @@ public class DriverDAO {
     }
 
 
+
     public boolean addDriver(Driver driver) {
         String ADD_DRIVER_SQL = "INSERT INTO driver (name, phone, email, licenseNumber, isAvailable, created_at) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(ADD_DRIVER_SQL)) {
@@ -171,5 +172,27 @@ public class DriverDAO {
             e.printStackTrace();
         }
         return false; // Return false if the operation fails
+    }
+
+    public int addDriverAndGetId(Driver driver) throws SQLException {
+        String query = "INSERT INTO Driver (name, phone, email, licenseNumber, isAvailable, created_at) VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, driver.getName());
+            statement.setString(2, driver.getPhone());
+            statement.setString(3, driver.getEmail());
+            statement.setString(4, driver.getLicenseNumber());
+            statement.setBoolean(5, driver.isAvailable());
+            statement.setTimestamp(6, driver.getCreatedAt());
+
+            int rowsInserted = statement.executeUpdate();
+
+            if (rowsInserted > 0) {
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1); // Return the generated driver ID
+                }
+            }
+        }
+        return -1; // Return -1 if insertion fails
     }
 }

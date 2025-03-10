@@ -83,4 +83,13 @@ public class DriverService {
             return false;
         }
     }
+    public int addDriverAndGetId(Driver driver) {
+        try {
+            return driverDAO.addDriverAndGetId(driver);
+        } catch (SQLException e) {
+            System.err.println("Error adding driver: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return -1; // Return -1 if the operation fails
+    }
 }

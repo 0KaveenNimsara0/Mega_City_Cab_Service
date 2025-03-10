@@ -120,6 +120,7 @@ public class CarDAO {
         }
     }
 
+
     public int addCarAndGetId(Car car) {
         String ADD_CAR_SQL = "INSERT INTO vehicle (model, capacity, isAvailable, registrationNumber, typeId, driverId, created_at) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";

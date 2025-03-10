@@ -318,8 +318,8 @@ public Booking getBookingById(int bookingID) throws SQLException {
         String query =
                 "SELECT c.model AS vehicleModel, c.registrationNumber AS vehicleRegistration, " +
                         "d.name AS driverName, d.phone AS driverPhone " +
-                        "FROM bookings b " +
-                        "JOIN car c ON b.carId = c.carId " +
+                        "FROM booking b " +
+                        "JOIN vehicle c ON b.carId = c.carId " +
                         "JOIN driver d ON c.driverId = d.driverId " +
                         "WHERE b.bookingId = ?";
 

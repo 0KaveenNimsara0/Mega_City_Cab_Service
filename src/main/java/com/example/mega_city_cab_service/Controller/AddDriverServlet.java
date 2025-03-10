@@ -68,6 +68,16 @@ public class AddDriverServlet extends HttpServlet {
         String email = request.getParameter("email");
         String licenseNumber = request.getParameter("licenseNumber");
         boolean isAvailable = Boolean.parseBoolean(request.getParameter("isAvailable"));
+        String carIdStr = request.getParameter("carId");
+
+        // Validate the car ID
+        if (carIdStr == null || carIdStr.isEmpty()) {
+            response.sendRedirect("assignDriver.jsp?error=Car ID is missing.");
+            return;
+        }
+
+        int carId = Integer.parseInt(carIdStr);
+
 
         Driver driver = new Driver();
         driver.setName(name);
@@ -78,12 +88,23 @@ public class AddDriverServlet extends HttpServlet {
         driver.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 
         try {
-            if (driverService.addDriver(driver)) {
-                response.sendRedirect("assignDriver.jsp?message=Driver added successfully");
-            } else {
-                response.sendRedirect("assignDriver.jsp?error=Failed to add driver");
+            // Save the new driver to the database
+
+            int newDriverId = driverService.addDriverAndGetId(driver); // Update DriverService to return the generated driver ID
+
+            if (newDriverId > 0) {
+                // Assign the driver to the car
+                boolean updated = carService.assignDriverToCar(String.valueOf(carId), newDriverId);
+
+                if (updated) {
+                    response.sendRedirect("ViewCarsServlet?message=Driver assigned to car successfully");
+
+                } else {
+                    response.sendRedirect("assignDriver.jsp?error=Failed to add driver");
+                }
             }
-        } catch (Exception e) {
+        }
+        catch(Exception e){
             e.printStackTrace();
             response.sendRedirect("assignDriver.jsp?error=Database error");
         }
