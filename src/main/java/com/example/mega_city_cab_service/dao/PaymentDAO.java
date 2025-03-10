@@ -3,10 +3,7 @@ package com.example.mega_city_cab_service.dao;
 import com.example.mega_city_cab_service.Util.DatabaseConnection;
 import com.example.mega_city_cab_service.model.Payment;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,27 +16,40 @@ public class PaymentDAO {
     }
 
     // Method to add a new payment
+    public boolean addPayment(Payment payment) {
+        String ADD_PAYMENT_SQL = "INSERT INTO payment (paymentId, bookingId, paymentMethod, amount, status) VALUES (?, ?, ?, ?, ?)";
 
-    public boolean addPayment(Payment payment) throws SQLException {
-        String query = "INSERT INTO payment (paymentId, bookingId, paymentMethod, amount, status) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(ADD_PAYMENT_SQL)) {
+            // Prepare the SQL statement
             preparedStatement.setString(1, payment.getPaymentId());
             preparedStatement.setString(2, payment.getBookingId()); // Include booking ID
             preparedStatement.setString(3, payment.getPaymentMethod());
             preparedStatement.setDouble(4, payment.getAmount());
             preparedStatement.setString(5, payment.getStatus());
 
+            // Execute the query
+            int rowsAffected = preparedStatement.executeUpdate();
 
-            return preparedStatement.executeUpdate() > 0;
+            // If one row is affected, insertion is successful
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Error adding payment: " + e.getMessage());
+            e.printStackTrace();
         }
+        return false; // Return false if the insertion fails
     }
-    public List<Payment> getPaymentsByBookingId(String bookingId) throws SQLException {
-        String query = "SELECT * FROM payment WHERE bookingId = ?";
+
+    // Method to retrieve payments by booking ID
+    public List<Payment> getPaymentsByBookingId(String bookingId) {
+        String GET_PAYMENTS_BY_BOOKING_ID_SQL = "SELECT * FROM payment WHERE bookingId = ?";
         List<Payment> payments = new ArrayList<>();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_PAYMENTS_BY_BOOKING_ID_SQL)) {
+            // Set the query parameter for booking ID
             preparedStatement.setString(1, bookingId);
 
+            // Execute the query
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     Payment payment = new Payment();
@@ -49,10 +59,14 @@ public class PaymentDAO {
                     payment.setAmount(resultSet.getDouble("amount"));
                     payment.setPaymentDate(resultSet.getTimestamp("paymentDate"));
                     payment.setStatus(resultSet.getString("status"));
-                    payments.add(payment);
+
+                    payments.add(payment); // Add the payment to the list
                 }
             }
+        } catch (SQLException e) {
+            System.err.println("Error fetching payments by booking ID: " + e.getMessage());
+            e.printStackTrace();
         }
-        return payments;
+        return payments; // Return the list of payments (empty if none found)
     }
 }

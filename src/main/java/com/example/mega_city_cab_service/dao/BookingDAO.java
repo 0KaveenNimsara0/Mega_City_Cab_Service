@@ -340,4 +340,89 @@ public Booking getBookingById(int bookingID) throws SQLException {
         return null; // Return null if no car or driver details are assigned
     }
 
+        // Get total number of bookings
+        public int getTotalBookings() throws SQLException {
+            String query = "SELECT COUNT(*) AS total FROM booking";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+                 ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("total");
+                }
+            }
+            return 0;
+        }
+
+        // Get total number of paid bookings
+        public int getTotalPaidBookings() throws SQLException {
+            String query = "SELECT COUNT(*) AS total FROM booking WHERE status = 'Confirmed'";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+                 ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("total");
+                }
+            }
+            return 0;
+        }
+
+        // Get total number of pending bookings
+        public int getPendingBookings() throws SQLException {
+            String query = "SELECT COUNT(*) AS total FROM booking WHERE status = 'Pending'";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+                 ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("total");
+                }
+            }
+            return 0;
+        }
+
+    public int getCardPayments() throws SQLException {
+        // Query updated to reference the correct table and column
+        String query = "SELECT COUNT(*) AS total FROM payment WHERE paymentMethod = 'creditCard'";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getInt("total");
+            }
+        }
+        return 0; // Return 0 if no records are found
+    }
+
+        // Get total number of PayPal payments
+        public int getPaypalPayments() throws SQLException {
+            String query = "SELECT COUNT(*) AS total FROM booking WHERE paymentMethod = 'PayPal'";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+                 ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("total");
+                }
+            }
+            return 0;
+        }
+
+        // Get total number of cash payments
+        public int getCashPayments() throws SQLException {
+            String query = "SELECT COUNT(*) AS total FROM booking WHERE paymentMethod = 'cash'";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+                 ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("total");
+                }
+            }
+            return 0;
+        }
+
+        // Get total income
+        public double getTotalIncome() throws SQLException {
+            String query = "SELECT SUM(amount) AS totalIncome FROM booking WHERE status = 'Confirmed'";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+                 ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getDouble("totalIncome");
+                }
+            }
+            return 0.0;
+        }
+
+
 }

@@ -20,7 +20,7 @@ public class LocationService {
         try {
             System.out.println("Fetching all locations...");
             return locationDAO.getAllLocations();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.err.println("Error fetching locations: " + e.getMessage());
             throw e;
         }

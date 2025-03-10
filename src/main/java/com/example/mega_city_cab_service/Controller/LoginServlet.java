@@ -25,12 +25,22 @@ public class LoginServlet extends HttpServlet {
         User user = userAccountServices.authenticateUser(usernameOrEmail, password);
 
         if (user != null) {
+            // Check user status
+            String status = user.getStatus(); // Get the user's status
+            if (status == null || "Banned".equalsIgnoreCase(status)) {
+                // Banned users cannot log in
+                response.sendRedirect("Login.jsp?error=banned");
+                return;
+            }
+
+
             // Create a session for the logged-in user
             HttpSession session = request.getSession();
             session.setAttribute("userId", user.getCustomerId());
             session.setAttribute("username", user.getUsername());
             session.setAttribute("email", user.getEmail());
             session.setAttribute("name", user.getName());
+            session.setAttribute("status", user.getStatus());
 
             // Redirect to the success page
             response.sendRedirect("Customer_Dashboard.jsp");

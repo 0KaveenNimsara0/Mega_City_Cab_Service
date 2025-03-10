@@ -4,6 +4,8 @@ import com.example.mega_city_cab_service.Util.passwordhash;
 import com.example.mega_city_cab_service.dao.userDAO;
 import com.example.mega_city_cab_service.model.User;
 
+import java.util.List;
+
 public class UserAccountServices {
     private userDAO userDao = new userDAO();
     private passwordhash passwordHasher = new passwordhash();
@@ -76,5 +78,13 @@ public class UserAccountServices {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public List<User> getAllUsers() {
+        return userDao.getAllUsers();
+    }
+
+    public boolean updateUserStatus(int userId, String status) {
+        return userDao.updateUserStatus(userId, status);
     }
 }

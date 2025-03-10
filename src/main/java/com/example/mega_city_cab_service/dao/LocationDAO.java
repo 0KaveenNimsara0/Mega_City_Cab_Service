@@ -3,10 +3,7 @@ package com.example.mega_city_cab_service.dao;
 import com.example.mega_city_cab_service.model.Location;
 import com.example.mega_city_cab_service.Util.DatabaseConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +18,9 @@ public class LocationDAO {
     }
 
     // Method to fetch all locations from the database
-    public List<Location> getAllLocations() throws SQLException {
-        List<Location> locations = new ArrayList<>();
+    public List<Location> getAllLocations() {
         String GET_ALL_LOCATIONS_SQL = "SELECT location_id, location_name FROM locations";
+        List<Location> locations = new ArrayList<>();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_LOCATIONS_SQL);
              ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -36,14 +33,13 @@ public class LocationDAO {
         } catch (SQLException e) {
             System.err.println("Error fetching locations: " + e.getMessage());
             e.printStackTrace();
-            throw e; // Rethrow the exception for the caller to handle
         }
 
-        return locations;
+        return locations; // Return the list of locations (empty if none found)
     }
 
     // Method to fetch the distance between two locations
-    public double getDistance(int fromLocationId, int toLocationId) throws SQLException {
+    public double getDistance(int fromLocationId, int toLocationId) {
         String GET_DISTANCE_SQL = "SELECT distance_km FROM distances WHERE from_location_id = ? AND to_location_id = ?";
         double distance = -1; // Default value if no distance is found
 
@@ -62,14 +58,15 @@ public class LocationDAO {
         } catch (SQLException e) {
             System.err.println("Error fetching distance: " + e.getMessage());
             e.printStackTrace();
-            throw e;
         }
 
-        return distance;
+        return distance; // Return -1 if no distance is found
     }
-    public int getLocationByName(String locationName) throws SQLException {
-        String query = "SELECT location_id FROM locations WHERE location_name = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+    // Method to fetch the location ID by name
+    public int getLocationByName(String locationName) {
+        String GET_LOCATION_BY_NAME_SQL = "SELECT location_id FROM locations WHERE location_name = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_LOCATION_BY_NAME_SQL)) {
             preparedStatement.setString(1, locationName);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -77,12 +74,17 @@ public class LocationDAO {
                     return resultSet.getInt("location_id");
                 }
             }
+        } catch (SQLException e) {
+            System.err.println("Error fetching location by name: " + e.getMessage());
+            e.printStackTrace();
         }
         return -1; // Return -1 if no matching location is found
     }
-    public Location getLocationById(int locationId) throws SQLException {
-        String query = "SELECT * FROM locations WHERE location_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+    // Method to fetch a location by its ID
+    public Location getLocationById(int locationId) {
+        String GET_LOCATION_BY_ID_SQL = "SELECT * FROM locations WHERE location_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_LOCATION_BY_ID_SQL)) {
             preparedStatement.setInt(1, locationId);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -93,10 +95,10 @@ public class LocationDAO {
                     );
                 }
             }
+        } catch (SQLException e) {
+            System.err.println("Error fetching location by ID: " + e.getMessage());
+            e.printStackTrace();
         }
         return null; // Return null if no location is found
     }
-
-
-
 }

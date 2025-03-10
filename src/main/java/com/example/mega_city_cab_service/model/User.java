@@ -9,6 +9,7 @@ public class User {
     private String phone;
     private String address; // New field for address
     private String nic;
+    private String status;
 
     public User(String username, String password, String name, String email, String phone) {
         this.username = username;
@@ -108,4 +109,11 @@ public class User {
     public void setNic(String nic) {
         this.nic = nic;
     }
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 }
