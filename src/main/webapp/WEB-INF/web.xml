@@ -4,121 +4,84 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
 
-    <!-- Servlet Definition -->
+    <!-- Defines the User Registration functionality and maps it to the "/register" URL -->
     <servlet>
         <servlet-name>UserRegisterServlet</servlet-name>
         <servlet-class>com.example.mega_city_cab_service.Controller.userRegisterServlet</servlet-class>
     </servlet>
-
-    <!-- Servlet Mapping -->
     <servlet-mapping>
         <servlet-name>UserRegisterServlet</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
 
-    <!-- Servlet Definition -->
+
+    <!-- Handles user login requests and maps it to the "/login" URL -->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.example.mega_city_cab_service.Controller.LoginServlet</servlet-class>
     </servlet>
-
-    <!-- Servlet Mapping -->
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
-    <!-- Servlet Definition -->
+
+    <!-- Logs the user out and maps it to the "/logout" URL -->
     <servlet>
         <servlet-name>Logout</servlet-name>
         <servlet-class>com.example.mega_city_cab_service.Controller.LogoutServlet</servlet-class>
     </servlet>
-
-    <!-- Servlet Mapping -->
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
-    <!-- Admin Login Servlet -->
+
+
+    <!-- Admin login functionality, mapped to the "/AdminLoginServlet" URL -->
     <servlet>
         <servlet-name>AdminLoginServlet</servlet-name>
         <servlet-class>com.example.mega_city_cab_service.Controller.AdminLoginServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>AdminLoginServlet</servlet-name>
         <url-pattern>/AdminLoginServlet</url-pattern>
     </servlet-mapping>
 
-    <!-- Admin Logout Servlet -->
+
+    <!-- Logs out the admin user, mapped to the "/AdminLogoutServlet" URL -->
     <servlet>
         <servlet-name>AdminLogoutServlet</servlet-name>
         <servlet-class>com.example.mega_city_cab_service.Controller.AdminLogoutServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>AdminLogoutServlet</servlet-name>
         <url-pattern>/AdminLogoutServlet</url-pattern>
     </servlet-mapping>
 
-<!--    <servlet>-->
-<!--        <servlet-name>LocationServlet</servlet-name>-->
-<!--        <servlet-class>com.example.mega_city_cab_service.Controller.LocationServlet</servlet-class>-->
-<!--    </servlet>-->
 
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>LocationServlet</servlet-name>-->
-<!--        <url-pattern>/locations</url-pattern>-->
-<!--    </servlet-mapping>-->
-
-<!--    &lt;!&ndash; Servlet Declaration &ndash;&gt;-->
-<!--    <servlet>-->
-<!--        <servlet-name>CalculateDistanceServlet</servlet-name>-->
-<!--        <servlet-class>com.example.mega_city_cab_service.Controller.CalculateDistanceServlet</servlet-class>-->
-<!--    </servlet>-->
-
-<!--    &lt;!&ndash; Servlet Mapping &ndash;&gt;-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>CalculateDistanceServlet</servlet-name>-->
-<!--        <url-pattern>/calculateDistance</url-pattern>-->
-<!--    </servlet-mapping>-->
-
-    <!-- Servlet Configuration -->
+    <!-- Validates discount coupons, mapped to the "/validateCoupon" URL -->
     <servlet>
         <servlet-name>CouponServlet</servlet-name>
         <servlet-class>com.example.mega_city_cab_service.Controller.CouponServlet</servlet-class>
     </servlet>
-
-    <!-- Servlet Mapping -->
     <servlet-mapping>
         <servlet-name>CouponServlet</servlet-name>
         <url-pattern>/validateCoupon</url-pattern>
     </servlet-mapping>
 
-    <!-- Servlet Configuration -->
-    <servlet>
-        <servlet-name>CarServlet</servlet-name>
-        <servlet-class>com.example.mega_city_cab_service.Controller.CarServlet</servlet-class>
-    </servlet>
 
-    <!-- Servlet Mapping -->
-    <servlet-mapping>
-        <servlet-name>CarServlet</servlet-name>
-        <url-pattern>/car</url-pattern>
-    </servlet-mapping>
-
-    <!-- Servlet Configuration -->
+    <!-- Handles booking operations, mapped to "/BookingServlet" -->
     <servlet>
         <servlet-name>BookingServlet</servlet-name>
         <servlet-class>com.example.mega_city_cab_service.Controller.BookingServlet</servlet-class>
     </servlet>
-
-    <!-- Servlet Mapping -->
     <servlet-mapping>
         <servlet-name>BookingServlet</servlet-name>
         <url-pattern>/BookingServlet</url-pattern>
     </servlet-mapping>
 
+
+    <!-- Retrieves and manages vehicle types, mapped to "/VehicleTypeServlet" -->
     <servlet>
         <servlet-name>VehicleTypeServlet</servlet-name>
         <servlet-class>com.example.mega_city_cab_service.Controller.VehicleTypeServlet</servlet-class>
@@ -128,18 +91,19 @@
         <url-pattern>/VehicleTypeServlet</url-pattern>
     </servlet-mapping>
 
-    <!-- Servlet Configuration for ConfirmBookingServlet -->
+
+    <!-- Confirms user bookings, mapped to "/ConfirmBookingServlet" -->
     <servlet>
         <servlet-name>ConfirmBookingServlet</servlet-name>
         <servlet-class>com.example.mega_city_cab_service.Controller.ConfirmBookingServlet</servlet-class>
     </servlet>
-
-    <!-- Servlet Mapping for ConfirmBookingServlet -->
     <servlet-mapping>
         <servlet-name>ConfirmBookingServlet</servlet-name>
         <url-pattern>/ConfirmBookingServlet</url-pattern>
     </servlet-mapping>
 
+
+    <!-- Cancels any booking, mapped to "/cancelBooking" -->
     <servlet>
         <servlet-name>CancelBooking</servlet-name>
         <servlet-class>com.example.mega_city_cab_service.Controller.CancelBooking</servlet-class>
@@ -150,6 +114,7 @@
     </servlet-mapping>
 
 
+    <!-- Calculates the booking costs, mapped to "/calculateBooking" -->
     <servlet>
         <servlet-name>CalculateBooking</servlet-name>
         <servlet-class>com.example.mega_city_cab_service.Controller.CalculateBookingServlet</servlet-class>
@@ -160,6 +125,7 @@
     </servlet-mapping>
 
 
+    <!-- Processes customer payment requests and maps them to the "/processPayment" URL -->
     <servlet>
         <servlet-name>ProcessPayment</servlet-name>
         <servlet-class>com.example.mega_city_cab_service.Controller.PaymentServlet</servlet-class>
@@ -167,6 +133,139 @@
     <servlet-mapping>
         <servlet-name>ProcessPayment</servlet-name>
         <url-pattern>/processPayment</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Displays a list of customer bookings and maps them to the "/viewBookings" URL -->
+    <servlet>
+        <servlet-name>ViewBookingServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.ViewBookingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewBookingServlet</servlet-name>
+        <url-pattern>/viewBookings</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Updates user profile information and maps to the "/updateProfile" URL -->
+    <servlet>
+        <servlet-name>updateProfile</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.UpdateProfileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>updateProfile</servlet-name>
+        <url-pattern>/updateProfile</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Cancels a displayed booking and maps to the "/cancelViewBooking" URL -->
+    <servlet>
+        <servlet-name>cancelViewBooking</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.CancelBookingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>cancelViewBooking</servlet-name>
+        <url-pattern>/cancelViewBooking</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Displays payment history and maps to the "/viewPayments" URL -->
+    <servlet>
+        <servlet-name>viewPayments</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.ViewPaymentsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>viewPayments</servlet-name>
+        <url-pattern>/viewPayments</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Adds a new car to the system and maps to the "/AddCarServlet" URL -->
+    <servlet>
+        <servlet-name>AddCarServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.AddCarServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddCarServlet</servlet-name>
+        <url-pattern>/AddCarServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Displays a list of all available cars and maps to the "/ViewCarsServlet" URL -->
+    <servlet>
+        <servlet-name>ViewCarsServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.ViewCarsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewCarsServlet</servlet-name>
+        <url-pattern>/ViewCarsServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Allows editing of car details and maps to the "/EditCarServlet" URL -->
+    <servlet>
+        <servlet-name>EditCarServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.EditCarServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditCarServlet</servlet-name>
+        <url-pattern>/EditCarServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Changes the availability status of a car and maps to the "/ChangeAvailabilityServlet" URL -->
+    <servlet>
+        <servlet-name>ChangeAvailabilityServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.ChangeAvailabilityServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChangeAvailabilityServlet</servlet-name>
+        <url-pattern>/ChangeAvailabilityServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Deletes a car from the system and maps to the "/DeleteCarServlet" URL -->
+    <servlet>
+        <servlet-name>DeleteCarServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.DeleteCarServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteCarServlet</servlet-name>
+        <url-pattern>/DeleteCarServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Adds a new driver to the system and maps to the "/AddDriverServlet" URL -->
+    <servlet>
+        <servlet-name>AddDriverServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.AddDriverServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddDriverServlet</servlet-name>
+        <url-pattern>/AddDriverServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Handles bookings managed by the admin and maps to the "/AdminBookingServlet" URL -->
+    <servlet>
+        <servlet-name>AdminBookingServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.AdminBookingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminBookingServlet</servlet-name>
+        <url-pattern>/AdminBookingServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Manages user-related actions in the admin panel and maps to the "/AdminUserManagementServlet" URL -->
+    <servlet>
+        <servlet-name>AdminUserManagementServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.AdminUserManagementServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminUserManagementServlet</servlet-name>
+        <url-pattern>/AdminUserManagementServlet</url-pattern>
     </servlet-mapping>
 
 </web-app>
