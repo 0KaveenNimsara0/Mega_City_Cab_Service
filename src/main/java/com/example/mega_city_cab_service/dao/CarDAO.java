@@ -185,5 +185,30 @@ public class CarDAO {
 
         return false; // Return false if the operation fails
     }
+    // Method to fetch all available cars
+    public List<Car> getAvailableCars() throws SQLException {
+        String query = "SELECT * FROM vehicle WHERE isAvailable = 1 AND driverId IS NULL";
+        List<Car> availableCars = new ArrayList<>();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Car car = new Car(
+                        resultSet.getString("carId"),
+                        resultSet.getString("model"),
+                        resultSet.getInt("capacity"),
+                        resultSet.getBoolean("isAvailable"),
+                        resultSet.getString("registrationNumber"),
+                        resultSet.getInt("driverId"), // This will be 0 if NULL in the database
+                        resultSet.getInt("typeId"),
+                        resultSet.getTimestamp("created_at")
+                );
+                availableCars.add(car);
+            }
+        }
+        return availableCars;
+    }
+
 
 }

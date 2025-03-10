@@ -115,4 +115,15 @@ public class CarService {
         }
         return false; // Return false if the operation fails
     }
+
+    // Method to fetch all available cars
+    public List<Car> getAvailableCars() {
+        try {
+            return carDAO.getAvailableCars();
+        } catch (SQLException e) {
+            System.err.println("Error fetching available cars: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null; // Return null if an error occurs
+    }
 }

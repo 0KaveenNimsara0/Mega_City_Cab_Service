@@ -3,6 +3,7 @@ package com.example.mega_city_cab_service.dao;
 import com.example.mega_city_cab_service.Util.DatabaseConnection;
 import com.example.mega_city_cab_service.model.Booking;
 import com.example.mega_city_cab_service.model.BookingDetails;
+import com.example.mega_city_cab_service.model.Payment;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -229,4 +230,114 @@ public Booking getBookingById(int bookingID) throws SQLException {
         }
         return bookings;
     }
+    // Get all bookings
+    public List<BookingDetails> getAllBookings() throws SQLException {
+        // Corrected query to use location_name instead of name
+        String query = "SELECT b.bookingID, l1.location_name AS pickupPointName, l2.location_name AS destinationName, b.carType, " +
+                "b.pickupDate, b.amount, b.status, b.couponCode, " +
+                "v.carId, v.model AS vehicleModel, v.registrationNumber AS vehicleRegistration, " +
+                "d.name AS driverName, d.phone AS driverPhone " +
+                "FROM booking b " +
+                "LEFT JOIN locations l1 ON b.pickupPoint = l1.location_id " +    // Correct join based on proper column names
+                "LEFT JOIN locations l2 ON b.destination = l2.location_id " +  // Correct join based on proper column names
+                "LEFT JOIN vehicle v ON b.carId = v.carId " +
+                "LEFT JOIN driver d ON v.driverId = d.driverId";
+
+        List<BookingDetails> bookings = new ArrayList<>();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                BookingDetails booking = new BookingDetails();
+
+                booking.setBookingID(resultSet.getInt("bookingID"));
+                booking.setPickupPointName(resultSet.getString("pickupPointName")); // Fetch pickup name
+                booking.setDestinationName(resultSet.getString("destinationName")); // Fetch destination name
+                booking.setCarTypeName(resultSet.getString("carType"));
+                booking.setPickupDate(resultSet.getDate("pickupDate"));
+                booking.setAmount(resultSet.getDouble("amount"));
+                booking.setStatus(resultSet.getString("status"));
+                booking.setCouponCode(resultSet.getString("couponCode"));
+                booking.setCarId(resultSet.getString("carId"));
+                booking.setVehicleModel(resultSet.getString("vehicleModel"));
+                booking.setVehicleRegistration(resultSet.getString("vehicleRegistration"));
+                booking.setDriverName(resultSet.getString("driverName"));
+                booking.setDriverPhone(resultSet.getString("driverPhone"));
+
+                bookings.add(booking);
+            }
+        }catch (SQLException e) {
+            System.err.println("Error retrieving bookings: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+
+        return bookings;
+    }
+
+    // Update booking status
+    public boolean updateBookingStatus(int bookingID, String status) throws SQLException {
+        String query = "UPDATE booking SET status = ? WHERE bookingID = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, status);
+            preparedStatement.setInt(2, bookingID);
+            return preparedStatement.executeUpdate() > 0;
+        }
+    }
+
+    // Assign a car to a booking
+    public boolean assignCarToBooking(int bookingID, String carId) throws SQLException {
+        String query = "UPDATE booking SET carId = ? WHERE bookingID = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, carId);
+            preparedStatement.setInt(2, bookingID);
+            return preparedStatement.executeUpdate() > 0;
+        }
+    }
+    public Payment getPaymentDetailsByBookingId(int bookingId) throws SQLException {
+        String query = "SELECT * FROM payment WHERE bookingId = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, bookingId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                Payment payment = new Payment();
+                payment.setPaymentId(resultSet.getString("paymentId"));
+                payment.setBookingId(resultSet.getString("bookingId"));
+                payment.setPaymentMethod(resultSet.getString("paymentMethod"));
+                payment.setAmount(resultSet.getDouble("amount"));
+                payment.setPaymentDate(resultSet.getTimestamp("paymentDate"));
+                payment.setStatus(resultSet.getString("status"));
+                return payment;
+            }
+        }
+        return null; // Return null if no payment is found
+    }
+
+    public BookingDetails getCarAndDriverDetailsByBookingId(int bookingId) throws SQLException {
+        String query =
+                "SELECT c.model AS vehicleModel, c.registrationNumber AS vehicleRegistration, " +
+                        "d.name AS driverName, d.phone AS driverPhone " +
+                        "FROM bookings b " +
+                        "JOIN car c ON b.carId = c.carId " +
+                        "JOIN driver d ON c.driverId = d.driverId " +
+                        "WHERE b.bookingId = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, bookingId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                BookingDetails bookingDetails = new BookingDetails();
+                bookingDetails.setVehicleModel(resultSet.getString("vehicleModel"));
+                bookingDetails.setVehicleRegistration(resultSet.getString("vehicleRegistration"));
+                bookingDetails.setDriverName(resultSet.getString("driverName"));
+                bookingDetails.setDriverPhone(resultSet.getString("driverPhone"));
+
+                return bookingDetails;
+            }
+        }
+        return null; // Return null if no car or driver details are assigned
+    }
+
 }
