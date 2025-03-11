@@ -26,8 +26,8 @@ public class CouponService {
         return couponDAO.getCouponByCode(couponCode);
     }
     // Retrieve all active coupons
-    public List<Coupon> getAllActiveCoupons() throws SQLException {
-        return couponDAO.getAllActiveCoupons();
+    public List<Coupon> getAllCoupons() throws SQLException {
+        return couponDAO.getAllCoupons();
     }
 
     // Add a new coupon
@@ -38,5 +38,10 @@ public class CouponService {
     // Delete a coupon
     public boolean deleteCoupon(int couponId) throws SQLException {
         return couponDAO.deleteCoupon(couponId);
+    }
+
+    // Update an existing coupon
+    public boolean updateCoupon(Coupon coupon) throws SQLException {
+        return couponDAO.updateCoupon(coupon);
     }
 }

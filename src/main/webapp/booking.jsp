@@ -371,6 +371,8 @@
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-ticket"></i></span>
                                 <input type="text" id="couponCode" name="couponCode" class="form-control" value="${param.couponCode}" placeholder="Enter coupon code if available">
+                                <!-- Hidden field to store discount percentage -->
+                                <input type="hidden" id="discountPercentage" name="discountPercentage" value="0">
                                 <button type="button" id="verifyButton" class="btn btn-outline-secondary">Verify</button>
                             </div>
                             <small id="couponFeedback" class="form-text text-muted">Enter a valid coupon code to get discounts</small>
@@ -475,7 +477,7 @@
             }
         });
 
-        // Mock coupon verification
+        // Database-driven coupon verification
         verifyButton.addEventListener('click', function() {
             const couponCode = couponField.value.trim();
 
@@ -485,22 +487,65 @@
                 return;
             }
 
-            // Mock verification - you would replace this with an actual AJAX call
-            setTimeout(() => {
-                if (couponCode.toUpperCase() === 'MEGACITY' || couponCode.toUpperCase() === 'WELCOME10') {
-                    couponField.classList.add('is-valid');
-                    couponField.classList.remove('is-invalid');
-                    couponFeedback.textContent = 'Valid coupon! You will receive a 10% discount.';
-                    couponFeedback.className = 'form-text text-success';
-                } else {
-                    couponField.classList.add('is-invalid');
-                    couponField.classList.remove('is-valid');
-                    couponFeedback.textContent = 'Invalid coupon code';
-                    couponFeedback.className = 'form-text text-danger';
-                }
-            }, 500);
-        });
+            // Show loading indicator
+            couponFeedback.textContent = 'Verifying coupon...';
+            couponFeedback.className = 'form-text text-info';
 
+            // AJAX call to validate coupon against database
+            fetch('ValidateCouponServlet', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'couponCode=' + encodeURIComponent(couponCode)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.valid) {
+                        // Valid coupon
+                        couponField.classList.add('is-valid');
+                        couponField.classList.remove('is-invalid');
+                        couponFeedback.textContent = data.message;
+                        couponFeedback.className = 'form-text text-success';
+
+                        // Store discount percentage for fare calculation
+                        if (document.getElementById('discountPercentage')) {
+                            document.getElementById('discountPercentage').value = data.discount;
+                        } else {
+                            // Create hidden field if it doesn't exist
+                            const discountInput = document.createElement('input');
+                            discountInput.type = 'hidden';
+                            discountInput.id = 'discountPercentage';
+                            discountInput.name = 'discountPercentage';
+                            discountInput.value = data.discount;
+                            document.querySelector('form').appendChild(discountInput);
+                        }
+                    } else {
+                        // Invalid coupon
+                        couponField.classList.add('is-invalid');
+                        couponField.classList.remove('is-valid');
+                        couponFeedback.textContent = data.message;
+                        couponFeedback.className = 'form-text text-danger';
+
+                        // Reset discount percentage if hidden field exists
+                        if (document.getElementById('discountPercentage')) {
+                            document.getElementById('discountPercentage').value = 0;
+                        }
+                    }
+
+                    // Recalculate fare if calculateFare function exists and fare has been calculated
+                    if (typeof calculateFare === 'function' && document.getElementById('fareAmount') &&
+                        document.getElementById('fareAmount').textContent !== '') {
+                        calculateFare();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    couponField.classList.add('is-invalid');
+                    couponFeedback.textContent = 'Error validating coupon. Please try again.';
+                    couponFeedback.className = 'form-text text-danger';
+                });
+        });
         // Form submission validation
         form.addEventListener('submit', function(event) {
             let isValid = true;
@@ -547,6 +592,38 @@
             }
         });
     });
+    function calculateFare() {
+        // Get the selected values
+        const distance = parseFloat(document.getElementById('distance').textContent || '0');
+        const vehicleTypeSelect = document.getElementById('vehicleType');
+        const baseRate = parseFloat(vehicleTypeSelect.value || '0');
+
+        // Get discount percentage
+        const discountPercentage = parseFloat(document.getElementById('discountPercentage')?.value || '0');
+
+        // Calculate fare
+        let fare = baseRate * distance;
+
+        // Apply discount if available
+        if (discountPercentage > 0) {
+            const discountAmount = fare * (discountPercentage / 100);
+            fare = fare - discountAmount;
+        }
+
+        // Format and display the fare
+        if (document.getElementById('fareAmount')) {
+            document.getElementById('fareAmount').textContent = fare.toFixed(2);
+        }
+
+        if (document.getElementById('fareCalculation')) {
+            document.getElementById('fareCalculation').classList.remove('d-none');
+        }
+
+        // Update the hidden input with the calculated fare
+        if (document.getElementById('calculatedFare')) {
+            document.getElementById('calculatedFare').value = fare.toFixed(2);
+        }
+    }
 </script>
 </body>
 </html>

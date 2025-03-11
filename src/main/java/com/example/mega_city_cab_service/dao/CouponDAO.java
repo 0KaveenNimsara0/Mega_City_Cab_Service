@@ -46,8 +46,8 @@ public class CouponDAO {
     }
 
     // Method to retrieve all active coupons
-    public List<Coupon> getAllActiveCoupons() {
-        String GET_ALL_ACTIVE_COUPONS_SQL = "SELECT * FROM coupon WHERE validUntil >= CURDATE()";
+    public List<Coupon> getAllCoupons() {
+        String GET_ALL_ACTIVE_COUPONS_SQL = "SELECT * FROM coupon";
         List<Coupon> coupons = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_ACTIVE_COUPONS_SQL);
              ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -99,6 +99,24 @@ public class CouponDAO {
 
         } catch (SQLException e) {
             System.err.println("Error deleting coupon: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updateCoupon(Coupon coupon) {
+        String updateQuery = "UPDATE coupon SET couponCode = ?, discountPercentage = ?, validUntil = ?, description = ? WHERE couponId = ?";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(updateQuery);
+            pstmt.setString(1, coupon.getCouponCode());
+            pstmt.setDouble(2, coupon.getDiscountPercentage());
+            pstmt.setDate(3, coupon.getValidUntil());
+            pstmt.setString(4, coupon.getDescription());
+            pstmt.setInt(5, coupon.getCouponId());
+
+            int rowsUpdated = pstmt.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
