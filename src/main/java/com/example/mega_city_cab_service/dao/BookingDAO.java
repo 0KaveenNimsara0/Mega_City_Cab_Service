@@ -364,53 +364,6 @@ public Booking getBookingById(int bookingID) throws SQLException {
             return 0;
         }
 
-        // Get total number of pending bookings
-        public int getPendingBookings() throws SQLException {
-            String query = "SELECT COUNT(*) AS total FROM booking WHERE status = 'Pending'";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query);
-                 ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getInt("total");
-                }
-            }
-            return 0;
-        }
-
-    public int getCardPayments() throws SQLException {
-        // Query updated to reference the correct table and column
-        String query = "SELECT COUNT(*) AS total FROM payment WHERE paymentMethod = 'creditCard'";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
-            if (resultSet.next()) {
-                return resultSet.getInt("total");
-            }
-        }
-        return 0; // Return 0 if no records are found
-    }
-
-        // Get total number of PayPal payments
-        public int getPaypalPayments() throws SQLException {
-            String query = "SELECT COUNT(*) AS total FROM booking WHERE paymentMethod = 'PayPal'";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query);
-                 ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getInt("total");
-                }
-            }
-            return 0;
-        }
-
-        // Get total number of cash payments
-        public int getCashPayments() throws SQLException {
-            String query = "SELECT COUNT(*) AS total FROM booking WHERE paymentMethod = 'cash'";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query);
-                 ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getInt("total");
-                }
-            }
-            return 0;
-        }
 
         // Get total income
         public double getTotalIncome() throws SQLException {
@@ -423,6 +376,58 @@ public Booking getBookingById(int bookingID) throws SQLException {
             }
             return 0.0;
         }
+    public List<BookingDetails> getAllBookingDetails() throws SQLException {
+        List<BookingDetails> bookingDetailsList = new ArrayList<>();
+        String query =
+                "SELECT b.bookingID, " +
+                        "       l1.location_name AS pickupPointName, " +
+                        "       l2.location_name AS destinationName, " +
+                        "       vt.typeName AS carTypeName, " +
+                        "       b.pickupDate, " +
+                        "       b.amount, " +
+                        "       b.status, " +
+                        "       v.registrationNumber AS vehicleRegistration, " +
+                        "       d.name AS driverName, " +
+                        "       d.phone AS driverPhone, " +
+                        "       p.paymentId, " +
+                        "       p.paymentMethod, " +
+                        "       p.paymentDate, " +
+                        "       p.status AS paymentStatus, " +
+                        "       p.amount AS PaymentAmount " +
+                        "FROM booking b " +
+                        "LEFT JOIN locations l1 ON b.pickupPoint = l1.location_id " +
+                        "LEFT JOIN locations l2 ON b.destination = l2.location_id " +
+                        "LEFT JOIN vehicle v ON b.carId = v.carId " +
+                        "LEFT JOIN driver d ON v.driverId = d.driverId " +
+                        "LEFT JOIN vehicle_type vt ON v.typeId = vt.typeId " +
+                        "LEFT JOIN payment p ON b.bookingID = p.bookingId";
 
+        try (PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                BookingDetails booking = new BookingDetails();
+
+                booking.setBookingID(resultSet.getInt("bookingID"));
+                booking.setPickupPointName(resultSet.getString("pickupPointName"));
+                booking.setDestinationName(resultSet.getString("destinationName"));
+                booking.setCarTypeName(resultSet.getString("carTypeName"));
+                booking.setPickupDate(resultSet.getDate("pickupDate"));
+                booking.setAmount(resultSet.getDouble("amount"));
+                booking.setStatus(resultSet.getString("status"));
+                booking.setVehicleRegistration(resultSet.getString("vehicleRegistration"));
+                booking.setDriverName(resultSet.getString("driverName"));
+                booking.setDriverPhone(resultSet.getString("driverPhone"));
+                booking.setPaymentId(resultSet.getString("paymentId"));
+                booking.setPaymentMethod(resultSet.getString("paymentMethod"));
+                booking.setPaymentDate(resultSet.getTimestamp("paymentDate"));
+                booking.setPaymentStatus(resultSet.getString("paymentStatus"));
+                booking.setPaymentAmount(resultSet.getDouble("PaymentAmount"));
+
+                bookingDetailsList.add(booking);
+            }
+        }
+        return bookingDetailsList;
+    }
 
 }

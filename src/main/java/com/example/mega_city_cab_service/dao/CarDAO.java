@@ -188,7 +188,7 @@ public class CarDAO {
     }
     // Method to fetch all available cars
     public List<Car> getAvailableCars() throws SQLException {
-        String query = "SELECT * FROM vehicle WHERE isAvailable = 1 AND driverId IS NULL";
+        String query = "SELECT * FROM vehicle WHERE isAvailable = 1 ";
         List<Car> availableCars = new ArrayList<>();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);

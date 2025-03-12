@@ -195,4 +195,20 @@ public class DriverDAO {
         }
         return -1; // Return -1 if insertion fails
     }
+
+    public int getTotalDrivers() throws SQLException {
+        String query = "SELECT COUNT(*) AS totalDrivers FROM driver";
+        int totalDrivers = 0;
+
+        try (PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            if (resultSet.next()) {
+                totalDrivers = resultSet.getInt("totalDrivers");
+            }
+        }
+
+        return totalDrivers;
+    }
+
 }

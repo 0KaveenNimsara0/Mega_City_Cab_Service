@@ -69,4 +69,53 @@ public class PaymentDAO {
         }
         return payments; // Return the list of payments (empty if none found)
     }
+
+    // Get total number of pending bookings
+    public int getPendingBookings() throws SQLException {
+        String query = "SELECT COUNT(*) AS total FROM payment WHERE status = 'Pending'";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getInt("total");
+            }
+        }
+        return 0;
+    }
+
+    public int getCardPayments() throws SQLException {
+        // Query updated to reference the correct table and column
+        String query = "SELECT COUNT(*) AS total FROM payment WHERE paymentMethod = 'creditCard'";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getInt("total");
+            }
+        }
+        return 0; // Return 0 if no records are found
+    }
+
+    // Get total number of PayPal payments
+    public int getPaypalPayments() throws SQLException {
+        String query = "SELECT COUNT(*) AS total FROM payment WHERE paymentMethod = 'PayPal'";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getInt("total");
+            }
+        }
+        return 0;
+    }
+
+    // Get total number of cash payments
+    public int getCashPayments() throws SQLException {
+        String query = "SELECT COUNT(*) AS total FROM payment WHERE paymentMethod = 'cash'";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getInt("total");
+            }
+        }
+        return 0;
+    }
+
 }
