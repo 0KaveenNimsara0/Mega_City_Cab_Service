@@ -55,18 +55,15 @@
 <body>
 <div class="error-container">
     <h1>Oops! Something went wrong.</h1>
-    <p>
-            <%
-    // Retrieve the error message from the request parameter or attribute
-    String errorMessage = (String) request.getAttribute("message");
-    if (errorMessage == null || errorMessage.isEmpty()) {
-        errorMessage = "An unexpected error occurred. Please try again later.";
-    }
-%>
-
     <p class="error-message">
-        <%= errorMessage %>
-    </p>
+        <%
+            // Retrieve the error message from the request parameter or attribute
+            String errorMessage = request.getParameter("message");
+            if (errorMessage == null || errorMessage.trim().isEmpty()) {
+                errorMessage = "An unexpected error occurred. Please try again later.";
+            }
+            System.out.print(errorMessage != null ? errorMessage : "");
+        %>
     </p>
     <a href="Customer_Dashboard.jsp">Go Back to Home</a>
 </div>
