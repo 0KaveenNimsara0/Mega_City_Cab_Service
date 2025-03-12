@@ -1,6 +1,8 @@
 package com.example.mega_city_cab_service.Controller;
 
 import com.example.mega_city_cab_service.dao.BookingDAO;
+import com.example.mega_city_cab_service.factory.BookingFactory;
+import com.example.mega_city_cab_service.factory.RideBookingFactory;
 import com.example.mega_city_cab_service.model.Booking;
 
 import jakarta.servlet.ServletException;
@@ -16,9 +18,11 @@ import java.time.LocalDateTime;
 
 public class BookingServlet extends HttpServlet {
     private final BookingDAO bookingDAO;
+    private final BookingFactory bookingFactory; // Factory instance
 
     public BookingServlet() {
         this.bookingDAO = new BookingDAO();
+        this.bookingFactory = new RideBookingFactory(); // Default to RideBookingFactory
     }
 
     @Override
@@ -46,22 +50,22 @@ public class BookingServlet extends HttpServlet {
             // Retrieve user ID from session
             int userId = (int) session.getAttribute("userId");
 
-            // Create a new Booking object
-            Booking booking = new Booking();
-            booking.setCustomerID(userId); // Set user ID from session
-            booking.setPickupPoint(pickupPoint); // Pickup point as an ID
-            booking.setDestination(destination); // Destination as an ID
-            booking.setPickupDate(Timestamp.valueOf(LocalDateTime.parse(pickupDate)));
-            booking.setCarType(carType);
-            booking.setAmount(totalAmount);
-            booking.setStatus("Pending");
-            booking.setCouponCode(couponCode);
+            // Use the factory to create a booking
+            Booking booking = bookingFactory.createBooking(
+                    userId, // Customer ID
+                    pickupPoint,
+                    destination,
+                    carType,
+                    Timestamp.valueOf(LocalDateTime.parse(pickupDate)),
+                    totalAmount,
+                    couponCode
+            );
 
             // Save the booking to the database
             boolean isBooked = bookingDAO.addBooking(booking);
 
             if (isBooked) {
-                // Forward to payment page with total amount
+                // Forward to payment page with booking details
                 request.setAttribute("bookingId", booking.getBookingID());
                 request.setAttribute("pickupPoint", String.valueOf(pickupPoint)); // Convert to String
                 request.setAttribute("destination", String.valueOf(destination)); // Convert to String

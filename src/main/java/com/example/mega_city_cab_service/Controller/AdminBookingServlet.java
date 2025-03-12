@@ -3,7 +3,7 @@ package com.example.mega_city_cab_service.Controller;
 import com.example.mega_city_cab_service.model.BookingDetails;
 import com.example.mega_city_cab_service.model.Car;
 import com.example.mega_city_cab_service.model.Payment;
-import com.example.mega_city_cab_service.service.BookingService;
+import com.example.mega_city_cab_service.service.AdminBookingService;
 import com.example.mega_city_cab_service.service.CarService;
 
 import jakarta.servlet.ServletException;
@@ -12,17 +12,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class AdminBookingServlet extends HttpServlet {
-    private final BookingService bookingService;
+    private final AdminBookingService bookingService;
     private final CarService carService;
 
     public AdminBookingServlet() {
-        this.bookingService = new BookingService();
+        this.bookingService = new AdminBookingService();
         this.carService = new CarService();
     }
 

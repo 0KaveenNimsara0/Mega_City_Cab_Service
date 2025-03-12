@@ -1,7 +1,7 @@
 package com.example.mega_city_cab_service.Controller;
 
 import com.example.mega_city_cab_service.model.BookingDetails;
-import com.example.mega_city_cab_service.service.BookingService;
+import com.example.mega_city_cab_service.service.AdminBookingService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ViewBookingServlet extends HttpServlet {
 
-    private final BookingService bookingService = new BookingService();
+    private final AdminBookingService bookingService = new AdminBookingService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

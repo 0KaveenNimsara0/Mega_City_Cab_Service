@@ -9,13 +9,11 @@ import com.example.mega_city_cab_service.model.Payment;
 import java.sql.SQLException;
 import java.util.List;
 
-public class BookingService {
+public class AdminBookingService {
 
     private final BookingDAO bookingDAO = new BookingDAO();
 
-    /**
-     * Fetch all booking details for a specific customer.
-     */
+    //get all booking using customer Id
     public List<BookingDetails> getBookingsByCustomerID(String customerID) throws SQLException {
         return bookingDAO.getBookingsByCustomerID(customerID);
 
