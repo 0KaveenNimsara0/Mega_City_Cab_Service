@@ -58,18 +58,6 @@
         <url-pattern>/AdminLogoutServlet</url-pattern>
     </servlet-mapping>
 
-
-    <!-- Validates discount coupons, mapped to the "/validateCoupon" URL -->
-    <servlet>
-        <servlet-name>CouponServlet</servlet-name>
-        <servlet-class>com.example.mega_city_cab_service.Controller.CouponServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CouponServlet</servlet-name>
-        <url-pattern>/validateCoupon</url-pattern>
-    </servlet-mapping>
-
-
     <!-- Handles booking operations, mapped to "/BookingServlet" -->
     <servlet>
         <servlet-name>BookingServlet</servlet-name>
@@ -114,15 +102,7 @@
     </servlet-mapping>
 
 
-    <!-- Calculates the booking costs, mapped to "/calculateBooking" -->
-    <servlet>
-        <servlet-name>CalculateBooking</servlet-name>
-        <servlet-class>com.example.mega_city_cab_service.Controller.CalculateBookingServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CalculateBooking</servlet-name>
-        <url-pattern>/calculateBooking</url-pattern>
-    </servlet-mapping>
+
 
 
     <!-- Processes customer payment requests and maps them to the "/processPayment" URL -->
@@ -267,5 +247,62 @@
         <servlet-name>AdminUserManagementServlet</servlet-name>
         <url-pattern>/AdminUserManagementServlet</url-pattern>
     </servlet-mapping>
+
+
+    <!-- Servlet configuration for adding a coupon -->
+    <servlet>
+        <servlet-name>AdminCouponAddServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.AdminCouponAddServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminCouponAddServlet</servlet-name>
+        <url-pattern>/AdminCouponAddServlet</url-pattern>
+    </servlet-mapping>
+
+    <!-- Servlet configuration for updating a coupon -->
+    <servlet>
+        <servlet-name>AdminCouponUpdateServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.AdminCouponUpdateServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminCouponUpdateServlet</servlet-name>
+        <url-pattern>/AdminCouponUpdateServlet</url-pattern>
+    </servlet-mapping>
+
+    <!-- Servlet configuration for deleting a coupon -->
+    <servlet>
+        <servlet-name>AdminCouponDeleteServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.AdminCouponDeleteServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminCouponDeleteServlet</servlet-name>
+        <url-pattern>/AdminCouponDeleteServlet</url-pattern>
+    </servlet-mapping>
+
+    <!-- Servlet configuration for Validate a coupon -->
+    <servlet>
+        <servlet-name>ValidateCouponServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.ValidateCouponServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ValidateCouponServlet</servlet-name>
+        <url-pattern>/ValidateCouponServlet</url-pattern>
+    </servlet-mapping>
+
+    <!-- Servlet configuration for deleting a coupon -->
+    <servlet>
+        <servlet-name>AdminReportServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.AdminReportServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminReportServlet</servlet-name>
+        <url-pattern>/adminReport</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>
