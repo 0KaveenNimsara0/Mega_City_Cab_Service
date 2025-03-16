@@ -364,13 +364,17 @@
     <i class="fas fa-tags me-2"></i>
     <span>Coupon</span>
   </a>
-
+  <a href="ViewDrivers">
+    <i class="fas fa-user-tie me-2"></i>
+    <span>Driver</span>
+  </a>
   <div class="sidebar-footer">
     <a href="AdminLogoutServlet">
       <i class="fas fa-sign-out-alt"></i>
       <span>Logout</span>
     </a>
   </div>
+
 </div>
 
 <!-- Main Content -->

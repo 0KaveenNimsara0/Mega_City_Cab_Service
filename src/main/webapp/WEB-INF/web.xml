@@ -305,4 +305,50 @@
     </servlet-mapping>
 
 
+
+    <servlet>
+        <servlet-name>AddDriver</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.AddDriver</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddDriver</servlet-name>
+        <url-pattern>/addDriver</url-pattern>
+    </servlet-mapping>
+
+
+
+    <servlet>
+        <servlet-name>EditDriverServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.EditDriverServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>EditDriverServlet</servlet-name>
+        <url-pattern>/editDriver</url-pattern>
+    </servlet-mapping>
+
+
+
+    <servlet>
+        <servlet-name>DeleteDriverServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.DeleteDriverServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DeleteDriverServlet</servlet-name>
+        <url-pattern>/deleteDriver</url-pattern>
+    </servlet-mapping>
+
+    
+
+    <servlet>
+        <servlet-name>ViewDriversServlet</servlet-name>
+        <servlet-class>com.example.mega_city_cab_service.Controller.ViewDriversServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ViewDriversServlet</servlet-name>
+        <url-pattern>/ViewDrivers</url-pattern>
+    </servlet-mapping>
+
 </web-app>
