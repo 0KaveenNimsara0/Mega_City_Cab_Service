@@ -9,269 +9,112 @@
     <title>View Payments - Mega City Cab Service</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --dark-bg: #121212;
-            --card-bg: #1e1e1e;
-            --accent: #ff9800;
-            --text-primary: #e0e0e0;
-            --text-secondary: #aaaaaa;
-            --border-color: #333333;
-        }
-
-        body {
-            background-color: var(--dark-bg);
-            color: var(--text-primary);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .page-title {
-            color: var(--accent);
-            font-weight: 600;
-            margin-bottom: 30px;
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 10px;
-        }
-
-        .booking-card {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-            overflow: hidden;
-        }
-
-        .booking-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card-header {
-            background-color: rgba(255, 152, 0, 0.2);
-            border-bottom: 1px solid var(--border-color);
-            padding: 15px 20px;
-            font-weight: 500;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        .booking-info {
-            margin-bottom: 15px;
-        }
-
-        .booking-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 5px;
-        }
-
-        .booking-value {
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-
-        .status-badge {
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-
-        .status-confirmed {
-            background-color: rgba(76, 175, 80, 0.2);
-            color: #4CAF50;
-        }
-
-        .status-pending {
-            background-color: rgba(255, 193, 7, 0.2);
-            color: #FFC107;
-        }
-
-        .status-cancelled {
-            background-color: rgba(244, 67, 54, 0.2);
-            color: #F44336;
-        }
-
-        .status-completed {
-            background-color: rgba(33, 150, 243, 0.2);
-            color: #2196F3;
-        }
-
-        .payment-details {
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 15px;
-        }
-
-        .payment-title {
-            font-size: 1rem;
-            color: var(--accent);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
-
-        .payment-title i {
-            margin-right: 8px;
-        }
-
-        .payment-info {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .payment-item {
-            flex: 1 0 50%;
-            min-width: 200px;
-            margin-bottom: 10px;
-        }
-
-        .payment-label {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-        }
-
-        .payment-value {
-            font-weight: 500;
-        }
-
-        .empty-state {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .empty-state i {
-            font-size: 4rem;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-        }
-
-        .empty-state-text {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-        }
-
-        @media (max-width: 768px) {
-            .booking-card {
-                margin-bottom: 15px;
-            }
-
-            .payment-item {
-                flex: 1 0 100%;
-            }
-        }
-    </style>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 </head>
-<body>
-<div class="container mt-5 mb-5">
-    <h2 class="text-center page-title">
-        <i class="fas fa-taxi me-2"></i>Your Bookings and Payments
+<body class="bg-light">
+<div class="container py-4">
+    <h2 class="text-center mb-4">
+        <i class="bi bi-taxi-front me-2"></i>Your Bookings and Payments
     </h2>
 
     <% List<BookingDetails> bookings = (List<BookingDetails>) request.getAttribute("bookings"); %>
     <% if (bookings != null && !bookings.isEmpty()) { %>
     <div class="row">
         <% for (BookingDetails booking : bookings) { %>
-        <div class="col-12">
-            <div class="booking-card">
+        <div class="col-12 mb-3">
+            <div class="card shadow-sm">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div>
-                        <i class="fas fa-bookmark me-2"></i>Booking #<%= booking.getBookingID() %>
+                        <i class="bi bi-bookmark me-2"></i>Booking #<%= booking.getBookingID() %>
                     </div>
                     <%
-                        String statusClass = "status-pending";
+                        String badgeClass = "bg-warning";
                         if (booking.getStatus().equalsIgnoreCase("confirmed")) {
-                            statusClass = "status-confirmed";
+                            badgeClass = "bg-success";
                         } else if (booking.getStatus().equalsIgnoreCase("cancelled")) {
-                            statusClass = "status-cancelled";
+                            badgeClass = "bg-danger";
                         } else if (booking.getStatus().equalsIgnoreCase("completed")) {
-                            statusClass = "status-completed";
+                            badgeClass = "bg-primary";
                         }
                     %>
-                    <span class="status-badge <%= statusClass %>">
-                                <%= booking.getStatus() %>
-                            </span>
+                    <span class="badge <%= badgeClass %>">
+                        <%= booking.getStatus() %>
+                    </span>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="booking-info">
-                                <div class="booking-label">
-                                    <i class="fas fa-map-marker-alt me-2"></i>Pickup Point
+                        <div class="col-md-6 mb-3">
+                            <div>
+                                <div class="text-muted small">
+                                    <i class="bi bi-geo-alt me-2"></i>Pickup Point
                                 </div>
-                                <div class="booking-value">
+                                <div class="fw-bold">
                                     <%= booking.getPickupPointName() %>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="booking-info">
-                                <div class="booking-label">
-                                    <i class="fas fa-location-arrow me-2"></i>Destination
+                        <div class="col-md-6 mb-3">
+                            <div>
+                                <div class="text-muted small">
+                                    <i class="bi bi-geo me-2"></i>Destination
                                 </div>
-                                <div class="booking-value">
+                                <div class="fw-bold">
                                     <%= booking.getDestinationName() %>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col-md-6">
-                            <div class="booking-info">
-                                <div class="booking-label">
-                                    <i class="far fa-calendar-alt me-2"></i>Pickup Date
+                            <div>
+                                <div class="text-muted small">
+                                    <i class="bi bi-calendar me-2"></i>Pickup Date
                                 </div>
-                                <div class="booking-value">
+                                <div class="fw-bold">
                                     <%= booking.getPickupDate() %>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="payment-details">
-                        <div class="payment-title">
-                            <i class="fas fa-credit-card"></i>Payment Information
+                    <div class="bg-light p-3 rounded">
+                        <div class="mb-2 fw-bold">
+                            <i class="bi bi-credit-card me-2"></i>Payment Information
                         </div>
-                        <div class="payment-info">
-                            <div class="payment-item">
-                                <div class="payment-label">Payment ID</div>
-                                <div class="payment-value"><%= booking.getPaymentId() %></div>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-3 mb-2">
+                                <div class="text-muted small">Payment ID</div>
+                                <div><%= booking.getPaymentId() %></div>
                             </div>
-                            <div class="payment-item">
-                                <div class="payment-label">Method</div>
-                                <div class="payment-value">
+                            <div class="col-md-6 col-lg-3 mb-2">
+                                <div class="text-muted small">Method</div>
+                                <div>
                                     <%
-                                        String paymentIcon = "fa-money-bill";
+                                        String paymentIcon = "bi-cash";
                                         if (booking.getPaymentMethod().toLowerCase().contains("card")) {
-                                            paymentIcon = "fa-credit-card";
+                                            paymentIcon = "bi-credit-card";
                                         } else if (booking.getPaymentMethod().toLowerCase().contains("paypal")) {
-                                            paymentIcon = "fa-paypal";
+                                            paymentIcon = "bi-paypal";
                                         } else if (booking.getPaymentMethod().toLowerCase().contains("wallet")) {
-                                            paymentIcon = "fa-wallet";
+                                            paymentIcon = "bi-wallet";
                                         }
                                     %>
-                                    <i class="fas <%= paymentIcon %> me-1"></i>
+                                    <i class="bi <%= paymentIcon %> me-1"></i>
                                     <%= booking.getPaymentMethod() %>
                                 </div>
                             </div>
-                            <div class="payment-item">
-                                <div class="payment-label">Amount</div>
-                                <div class="payment-value"><%= booking.getPaymentAmount() %></div>
+                            <div class="col-md-6 col-lg-3 mb-2">
+                                <div class="text-muted small">Amount</div>
+                                <div class="fw-bold"><%= booking.getPaymentAmount() %></div>
                             </div>
-                            <div class="payment-item">
-                                <div class="payment-label">Date</div>
-                                <div class="payment-value"><%= booking.getPaymentDate() %></div>
+                            <div class="col-md-6 col-lg-3 mb-2">
+                                <div class="text-muted small">Date</div>
+                                <div><%= booking.getPaymentDate() %></div>
                             </div>
-                            <div class="payment-item">
-                                <div class="payment-label">Status</div>
+                            <div class="col-md-6 col-lg-3">
+                                <div class="text-muted small">Status</div>
                                 <%
                                     String paymentStatusClass = "text-warning";
                                     if (booking.getPaymentStatus().equalsIgnoreCase("paid") ||
@@ -281,7 +124,7 @@
                                         paymentStatusClass = "text-danger";
                                     }
                                 %>
-                                <div class="payment-value <%= paymentStatusClass %>">
+                                <div class="<%= paymentStatusClass %>">
                                     <%= booking.getPaymentStatus() %>
                                 </div>
                             </div>
@@ -293,11 +136,19 @@
         <% } %>
     </div>
     <% } else { %>
-    <div class="empty-state">
-        <i class="fas fa-search"></i>
-        <div class="empty-state-text">No bookings found. Your booking history will appear here.</div>
+    <div class="card shadow-sm">
+        <div class="card-body text-center py-5">
+            <i class="bi bi-search fs-1 text-muted mb-3 d-block"></i>
+            <h5 class="text-muted">No bookings found. Your booking history will appear here.</h5>
+        </div>
     </div>
     <% } %>
+
+    <div class="mt-3">
+        <a href="Customer_Dashboard.jsp" class="btn btn-outline-primary">
+            <i class="bi bi-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
 </div>
 
 <!-- Bootstrap JS -->

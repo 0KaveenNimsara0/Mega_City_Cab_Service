@@ -31,98 +31,71 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <style>
-        :root {
-            --primary-color: #3498db;
-            --secondary-color: #333333;
-            --accent-color: #1a73e8;
-            --light-gray: #f8f9fa;
-            --dark-gray: #495057;
-        }
-
         body {
-            background-color: #f5f5f5;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            padding: 20px 0;
         }
 
         .page-header {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
+            background-color: #0275d8;
+            color: white;
             padding: 15px 0;
-            border-radius: 0 0 15px 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
-
-        .cab-logo {
-            max-height: 60px;
+            margin-bottom: 20px;
         }
 
         .main-card {
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border: none;
-            margin-bottom: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
 
         .card-header {
-            background-color: var(--secondary-color);
+            background-color: #343a40;
             color: white;
             font-weight: bold;
             padding: 15px;
-            border-bottom: 3px solid var(--primary-color);
+            border-bottom: 2px solid #0275d8;
         }
 
         .card-body {
-            padding: 25px;
-        }
-
-        .table {
-            margin-bottom: 0;
+            padding: 20px;
         }
 
         .table td {
-            padding: 12px;
+            padding: 8px;
             vertical-align: middle;
         }
 
         .booking-icon {
-            color: var(--accent-color);
+            color: #0275d8;
             margin-right: 10px;
         }
 
         .payment-methods {
             display: flex;
             justify-content: space-around;
-            margin: 30px 0;
+            margin: 20px 0;
         }
 
         .payment-card {
-            padding: 25px 15px;
-            border: 2px solid #ddd;
-            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
             width: 30%;
             background-color: white;
         }
 
         .payment-card.selected {
-            border-color: var(--primary-color);
-            background-color: #fffbeb;
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .payment-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-color: #0275d8;
+            background-color: #f0f8ff;
         }
 
         .payment-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+            font-size: 2rem;
+            margin-bottom: 10px;
         }
 
         .cash-icon {
@@ -130,7 +103,7 @@
         }
 
         .card-icon {
-            color: #007bff;
+            color: #0275d8;
         }
 
         .paypal-icon {
@@ -139,28 +112,20 @@
 
         .payment-label {
             font-weight: bold;
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
         .btn-action {
-            padding: 12px 20px;
-            font-size: 16px;
+            padding: 10px 15px;
             font-weight: bold;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            margin-top: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
         }
 
         .btn-confirm {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
+            background-color: #0275d8;
+            color: white;
             border: none;
-        }
-
-        .btn-confirm:hover {
-            background-color: #e6b800;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
         .btn-cancel {
@@ -169,64 +134,50 @@
             border: 1px solid #dc3545;
         }
 
-        .btn-cancel:hover {
-            background-color: #dc3545;
-            color: white;
-        }
-
         .trip-info-section {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: var(--light-gray);
-            border-radius: 10px;
-        }
-
-        .route-icon {
-            font-size: 1.5rem;
-            margin: 0 10px;
-            color: var(--dark-gray);
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
         }
 
         .total-amount-row {
-            background-color: #fffbeb;
-            font-size: 1.2rem;
+            background-color: #fff3cd;
+            font-weight: bold;
         }
 
         .footer-text {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 15px;
             font-size: 0.9rem;
-            color: var(--dark-gray);
+            color: #6c757d;
         }
     </style>
 </head>
 <body>
 <header class="page-header">
     <div class="container">
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center">
-                <img src="/api/placeholder/120/60" alt="Mega City Cab" class="cab-logo">
-            </div>
-            <h1 class="m-0">Payment Confirmation</h1>
+        <div class="d-flex justify-content-center align-items-center">
+            <h1 class="m-0">Mega City Cab Service - Payment</h1>
         </div>
     </div>
 </header>
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-lg-9">
+        <div class="col-lg-8">
             <div class="card main-card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h3 class="m-0"><i class="fas fa-receipt booking-icon"></i>Booking Summary</h3>
-                        <span class="badge bg-primary p-2">Pending Payment</span>
+                        <h3 class="m-0">Booking Summary</h3>
+                        <span class="badge bg-warning p-2">Pending Payment</span>
                     </div>
                 </div>
 
                 <div class="card-body">
-                    <!-- Trip Route Visualization -->
+                    <!-- Trip Route Information -->
                     <div class="trip-info-section">
                         <div class="text-center">
                             <i class="fas fa-map-marker-alt fa-2x text-danger"></i>
@@ -246,7 +197,7 @@
                         </div>
                     </div>
 
-                    <table class="table table-hover">
+                    <table class="table">
                         <tr>
                             <td><i class="fas fa-user booking-icon"></i><strong>Customer Name:</strong></td>
                             <td><%= customerName != null ? customerName : "Guest" %></td>
@@ -350,109 +301,33 @@
 
         selectedPaymentMethod = method;
 
-        // Show a more elegant notification instead of alert
-        const methodName = method.charAt(0).toUpperCase() + method.slice(1);
-        showNotification(`${methodName} selected as your payment method`);
-    }
-
-    function showNotification(message) {
-        // Create notification element
-        const notification = document.createElement('div');
-        notification.style.position = 'fixed';
-        notification.style.bottom = '20px';
-        notification.style.left = '50%';
-        notification.style.transform = 'translateX(-50%)';
-        notification.style.backgroundColor = '#333';
-        notification.style.color = 'white';
-        notification.style.padding = '10px 20px';
-        notification.style.borderRadius = '5px';
-        notification.style.zIndex = '1000';
-        notification.style.opacity = '0';
-        notification.style.transition = 'opacity 0.3s ease-in-out';
-        notification.textContent = message;
-
-        // Add to document
-        document.body.appendChild(notification);
-
-        // Show notification
-        setTimeout(() => { notification.style.opacity = '1'; }, 10);
-
-        // Hide and remove after 3 seconds
-        setTimeout(() => {
-            notification.style.opacity = '0';
-            setTimeout(() => {
-                document.body.removeChild(notification);
-            }, 300);
-        }, 3000);
+        // Simple alert instead of custom notification
+        alert(method.charAt(0).toUpperCase() + method.slice(1) + " selected as your payment method");
     }
 
     function confirmPayment() {
         if (!selectedPaymentMethod) {
-            showNotification("Please select a payment method");
+            alert("Please select a payment method");
             return;
         }
 
         // Set the selected payment method in the hidden field
         document.getElementById("paymentMethod").value = selectedPaymentMethod;
 
-        // Show loading state on button
-        const confirmBtn = document.querySelector('.btn-confirm');
-        const originalContent = confirmBtn.innerHTML;
-        confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
-        confirmBtn.disabled = true;
-
-        // Simulate processing delay (remove this in production)
-        setTimeout(() => {
-            // Submit the form
-            document.getElementById("paymentForm").submit();
-        }, 1000);
+        // Submit the form
+        document.getElementById("paymentForm").submit();
     }
 
     function cancelBooking() {
-        // Create modal for cancellation confirmation
-        const modalHTML = `
-            <div class="modal fade" id="cancelModal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header bg-danger text-white">
-                            <h5 class="modal-title">Cancel Booking</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Are you sure you want to cancel this booking?</p>
-                            <p class="text-muted small">This action cannot be undone.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                <i class="fas fa-arrow-left me-2"></i>Go Back
-                            </button>
-                            <button type="button" class="btn btn-danger" onclick="confirmCancel()">
-                                <i class="fas fa-times-circle me-2"></i>Yes, Cancel Booking
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
+        if (confirm("Are you sure you want to cancel this booking? This action cannot be undone.")) {
+            // Set the hidden field for cancellation
+            document.getElementById("paymentMethod").value = "cancelled";
 
-        // Add modal to document
-        const modalContainer = document.createElement('div');
-        modalContainer.innerHTML = modalHTML;
-        document.body.appendChild(modalContainer);
-
-        // Show modal
-        const cancelModal = new bootstrap.Modal(document.getElementById('cancelModal'));
-        cancelModal.show();
-    }
-
-    function confirmCancel() {
-        // Set the hidden field for cancellation
-        document.getElementById("paymentMethod").value = "cancelled";
-
-        // Submit the form with a special action for cancellation
-        const form = document.getElementById("paymentForm");
-        form.action = "cancelBooking"; // Redirect to a new endpoint for cancellation
-        form.submit();
+            // Submit the form with a special action for cancellation
+            const form = document.getElementById("paymentForm");
+            form.action = "cancelBooking"; // Redirect to a new endpoint for cancellation
+            form.submit();
+        }
     }
 </script>
 

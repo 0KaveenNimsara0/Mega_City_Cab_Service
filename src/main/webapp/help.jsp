@@ -1,11 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: kavee
-  Date: 3/8/2025
-  Time: 12:03 AM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,51 +11,35 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-dark: #121212;
-            --card-dark: #1e1e1e;
-            --text-primary: #e0e0e0;
-            --text-secondary: #aaaaaa;
-            --accent-color: #ffc107;
-            --secondary-accent: #3a506b;
-            --header-accent: #0ea5e9;
-            --border-subtle: #333333;
-            --section-bg: #252525;
-            --hover-color: #2c2c2c;
-        }
-
         body {
-            background-color: var(--bg-dark);
             font-family: 'Poppins', sans-serif;
-            color: var(--text-primary);
+            background-color: #f8f9fa;
             line-height: 1.6;
         }
 
         .help-container {
-            max-width: 850px;
-            margin: 40px auto;
-            padding: 30px;
-            background: var(--card-dark);
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-subtle);
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 25px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
 
         .main-title {
-            color: var(--accent-color);
+            color: #0d6efd;
             font-weight: 700;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             text-align: center;
-            font-size: 2.5rem;
-            letter-spacing: 0.5px;
+            font-size: 2.2rem;
         }
 
         .section-title {
-            color: var(--header-accent);
+            color: #212529;
             font-weight: 600;
-            margin: 35px 0 20px;
-            border-bottom: 2px solid var(--secondary-accent);
-            padding-bottom: 10px;
+            margin: 30px 0 20px;
+            border-bottom: 2px solid #0d6efd;
+            padding-bottom: 8px;
             font-size: 1.4rem;
             display: flex;
             align-items: center;
@@ -71,39 +47,29 @@
 
         .section-title i {
             margin-right: 10px;
-            font-size: 1.3rem;
+            color: #0d6efd;
         }
 
         .welcome-text {
-            background: linear-gradient(to right, var(--secondary-accent), var(--card-dark));
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            border-left: 4px solid var(--accent-color);
-        }
-
-        .faq-container {
-            margin-bottom: 30px;
+            background-color: #f0f8ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #0d6efd;
         }
 
         .faq-item {
-            margin-bottom: 20px;
-            background-color: var(--section-bg);
-            border-radius: 12px;
-            padding: 15px 20px;
-            transition: all 0.3s ease;
-            border-left: 3px solid transparent;
-        }
-
-        .faq-item:hover {
-            border-left-color: var(--accent-color);
-            background-color: var(--hover-color);
-            transform: translateX(5px);
+            margin-bottom: 15px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            border-left: 3px solid #0d6efd;
         }
 
         .faq-question {
             font-weight: 600;
-            color: var(--accent-color);
+            color: #0d6efd;
             margin-bottom: 10px;
             font-size: 1.1rem;
             display: flex;
@@ -112,81 +78,64 @@
 
         .faq-question i {
             margin-right: 10px;
-            font-size: 0.9rem;
         }
 
         .faq-answer {
-            color: var(--text-secondary);
+            color: #495057;
             padding-left: 25px;
         }
 
-        .faq-answer ol, .faq-answer ul {
-            padding-left: 20px;
-            margin-top: 10px;
-        }
-
-        .faq-answer li {
-            margin-bottom: 8px;
-        }
-
         .faq-highlight {
-            color: var(--accent-color);
+            color: #0d6efd;
             font-weight: 500;
         }
 
         .contact-info {
-            background: linear-gradient(145deg, var(--secondary-accent), var(--section-bg));
-            padding: 25px;
-            border-radius: 12px;
-            margin-top: 30px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .contact-info i {
-            color: var(--accent-color);
-            margin-right: 15px;
-            width: 20px;
-            text-align: center;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 25px;
         }
 
         .contact-card {
             display: flex;
             align-items: center;
             margin: 15px 0;
-            padding: 12px;
-            background-color: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            background-color: #ffffff;
             border-radius: 8px;
-            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
         }
 
-        .contact-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        .contact-card i {
+            color: #0d6efd;
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
         }
 
         .quick-links {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 10px;
             margin: 20px 0;
         }
 
         .quick-link {
-            background-color: var(--section-bg);
-            padding: 10px 20px;
-            border-radius: 50px;
-            color: var(--text-primary);
+            background-color: #e9ecef;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: #212529;
             text-decoration: none;
-            transition: all 0.3s ease;
-            border: 1px solid var(--border-subtle);
+            border: 1px solid #dee2e6;
             display: flex;
             align-items: center;
             font-size: 0.9rem;
         }
 
         .quick-link:hover {
-            background-color: var(--secondary-accent);
-            color: var(--accent-color);
+            background-color: #0d6efd;
+            color: #ffffff;
         }
 
         .quick-link i {
@@ -197,13 +146,13 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 24px;
-            height: 24px;
-            background-color: var(--secondary-accent);
-            color: var(--accent-color);
+            width: 22px;
+            height: 22px;
+            background-color: #0d6efd;
+            color: #ffffff;
             border-radius: 50%;
-            margin-right: 10px;
-            font-size: 0.8rem;
+            margin-right: 8px;
+            font-size: 0.75rem;
             font-weight: bold;
         }
 
@@ -215,32 +164,33 @@
         }
 
         .payment-method {
-            background-color: var(--hover-color);
-            padding: 10px 20px;
+            background-color: #f8f9fa;
+            padding: 10px;
             border-radius: 8px;
             margin: 5px;
             text-align: center;
-            width: 120px;
+            width: 110px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
         }
 
         .payment-method i {
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 8px;
-            color: var(--accent-color);
+            color: #0d6efd;
         }
 
         .tip-card {
-            background-color: var(--section-bg);
-            border-radius: 10px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
             padding: 15px;
             margin-bottom: 15px;
-            border-left: 3px solid var(--header-accent);
+            border-left: 3px solid #0d6efd;
             display: flex;
             align-items: flex-start;
         }
 
         .tip-card i {
-            color: var(--header-accent);
+            color: #0d6efd;
             margin-right: 10px;
             font-size: 1.2rem;
             margin-top: 3px;
@@ -249,31 +199,24 @@
         .button-section {
             display: flex;
             justify-content: center;
-            margin-top: 30px;
+            margin-top: 25px;
             gap: 15px;
         }
 
         .help-button {
-            background-color: var(--secondary-accent);
-            color: var(--text-primary);
+            background-color: #6c757d;
+            color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 50px;
+            padding: 8px 15px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             font-weight: 500;
         }
 
         .help-button.primary {
-            background-color: var(--accent-color);
-            color: #000;
-        }
-
-        .help-button:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
+            background-color: #0d6efd;
         }
 
         .help-button i {
@@ -281,10 +224,10 @@
         }
 
         .coupon-box {
-            background-color: rgba(255, 193, 7, 0.1);
-            border: 1px dashed var(--accent-color);
-            border-radius: 8px;
-            padding: 10px 15px;
+            background-color: #f8f9fa;
+            border: 1px dashed #0d6efd;
+            border-radius: 5px;
+            padding: 5px 10px;
             display: inline-block;
             margin: 5px 10px;
             font-family: monospace;
@@ -293,19 +236,15 @@
 
         footer {
             text-align: center;
-            margin-top: 40px;
-            color: var(--text-secondary);
+            margin-top: 30px;
+            color: #6c757d;
             font-size: 0.9rem;
         }
 
         @media (max-width: 768px) {
             .help-container {
-                margin: 20px;
-                padding: 20px;
-            }
-
-            .main-title {
-                font-size: 2rem;
+                margin: 15px;
+                padding: 15px;
             }
 
             .payment-methods {
@@ -318,16 +257,14 @@
             }
 
             .button-section {
-                flex-direction: column;
-                gap: 10px;
-                align-items: center;
+                flex-wrap: wrap;
             }
         }
     </style>
 </head>
 <body>
 <div class="help-container">
-    <h1 class="main-title"><i class="fas fa-headset me-3"></i>Help & Support</h1>
+    <h1 class="main-title"><i class="fas fa-headset me-2"></i>Help & Support</h1>
 
     <!-- Quick Links Section -->
     <div class="quick-links">
@@ -491,8 +428,8 @@
             <i class="fas fa-envelope"></i>
             <div>
                 <strong>Email Support</strong><br>
-                <a href="mailto:support@megacitycab.com" style="color: var(--accent-color);">support@megacitycab.com</a>
-                <div style="font-size: 0.8rem; color: var(--text-secondary);">Response time: Within 2 hours</div>
+                <a href="mailto:support@megacitycab.com" style="color: #0d6efd;">support@megacitycab.com</a>
+                <div style="font-size: 0.8rem; color: #6c757d;">Response time: Within 2 hours</div>
             </div>
         </div>
 
@@ -500,8 +437,8 @@
             <i class="fas fa-phone-alt"></i>
             <div>
                 <strong>24/7 Helpline</strong><br>
-                <a href="tel:+1234567890" style="color: var(--accent-color);">+123 456 7890</a>
-                <div style="font-size: 0.8rem; color: var(--text-secondary);">Available: 24 hours, 7 days a week</div>
+                <a href="tel:+1234567890" style="color: #0d6efd;">+123 456 7890</a>
+                <div style="font-size: 0.8rem; color: #6c757d;">Available: 24 hours, 7 days a week</div>
             </div>
         </div>
 
@@ -509,8 +446,8 @@
             <i class="fas fa-comments"></i>
             <div>
                 <strong>Live Chat</strong><br>
-                <span style="color: var(--accent-color);">Available on our website and app</span>
-                <div style="font-size: 0.8rem; color: var(--text-secondary);">Average wait time: Less than 1 minute</div>
+                <span style="color: #0d6efd;">Available on our website and app</span>
+                <div style="font-size: 0.8rem; color: #6c757d;">Average wait time: Less than 1 minute</div>
             </div>
         </div>
 
@@ -518,8 +455,8 @@
             <i class="fas fa-building"></i>
             <div>
                 <strong>Head Office</strong><br>
-                <span style="color: var(--text-secondary);">123 Cab Service Lane, Mega City, Country</span>
-                <div style="font-size: 0.8rem; color: var(--text-secondary);">Office hours: Mon-Fri, 9 AM - 6 PM</div>
+                <span style="color: #6c757d;">123 Cab Service Lane, Mega City, Country</span>
+                <div style="font-size: 0.8rem; color: #6c757d;">Office hours: Mon-Fri, 9 AM - 6 PM</div>
             </div>
         </div>
     </div>
